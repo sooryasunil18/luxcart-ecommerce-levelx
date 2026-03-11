@@ -218,7 +218,7 @@ class AdminController
         // We'll fetch orders first, then attach items to them similar to Customer view but globally.
         $orders = $this->db->fetchAll(
             "SELECT o.*, u.name as customer_name, u.email as customer_email,
-                    sa.full_name as shipping_name, sa.city, sa.state
+                    sa.full_name as shipping_name, sa.city, sa.state, sa.address
              FROM orders o
              JOIN users u ON o.user_id = u.id
              JOIN shipping_addresses sa ON o.shipping_address_id = sa.id
@@ -246,27 +246,27 @@ class AdminController
     {
         $orderId = $_POST['order_id'] ?? 0;
         $status = $_POST['status'] ?? '';
-        
+
         $validStatuses = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
-        
+
         if ($orderId && in_array($status, $validStatuses)) {
             // Admin updates the TOP LEVEL order status
             $this->db->query(
                 "UPDATE orders SET order_status = ? WHERE id = ?",
                 [$status, $orderId]
             );
-            
+
             // Auto-update the items globally if admin forces a change
             $this->db->query(
                 "UPDATE order_items SET item_status = ? WHERE order_id = ?",
                 [$status, $orderId]
             );
-            
+
             $_SESSION['success'] = "Order #$orderId global status updated to " . ucfirst($status) . ".";
         } else {
             $_SESSION['error'] = "Invalid status update requested.";
         }
-        
+
         header('Location: ' . BASE_URL . '/admin/orders');
         exit;
     }

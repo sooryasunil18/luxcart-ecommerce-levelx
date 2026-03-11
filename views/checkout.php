@@ -1,22 +1,16 @@
-<!-- Checkout Page -->
-<section class="page-header">
-    <div class="container">
-        <h1>Secure Checkout</h1>
-        <nav class="breadcrumb">
-            <a href="<?= BASE_URL ?>/">Home</a>
-            <i class="fas fa-chevron-right"></i>
-            <a href="<?= BASE_URL ?>/cart">Cart</a>
-            <i class="fas fa-chevron-right"></i>
-            <span>Checkout</span>
-        </nav>
-    </div>
-</section>
+<!-- Secure Checkout Page (Beginner Friendly Design) -->
+<div style="min-height: calc(100vh - 130px); background: #f8fafc; padding: 50px 0; font-family: 'Inter', Arial, sans-serif; line-height: 1.6;">
+    <div style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+        <!-- Simple Header -->
+        <div style="margin-bottom: 40px; text-align: center;">
+            <div style="font-size: 2.5rem; color: #0d9488; margin-bottom: 15px;"><i class="fas fa-lock"></i></div>
+            <h1 style="font-size: 1.5rem; color: #1a1a2e; font-weight: 700; margin: 0 0 10px 0;">Secure Checkout</h1>
+            <p style="color: #4b5563; font-size: 1rem;">Almost there! Just a few more details to complete your order.</p>
+        </div>
 
-<section class="section">
-    <div class="container">
         <?php if (isset($_SESSION['error'])): ?>
-            <div class="alert alert-error">
-                <i class="fas fa-exclamation-circle"></i> <?= htmlspecialchars($_SESSION['error']) ?>
+            <div style="background: #fee2e2; color: #b91c1c; padding: 15px 25px; border-radius: 12px; border: 1px solid #fecaca; margin-bottom: 30px; font-weight: 600;">
+                <i class="fas fa-exclamation-circle" style="margin-right: 10px;"></i> <?= htmlspecialchars($_SESSION['error']) ?>
             </div>
             <?php unset($_SESSION['error']); ?>
         <?php endif; ?>
@@ -24,148 +18,144 @@
         <form action="<?= BASE_URL ?>/checkout/process" method="POST" id="checkoutForm">
             <div style="display: grid; grid-template-columns: 1fr 400px; gap: 40px; align-items: start;">
                 
-                <!-- Left Column: Forms -->
+                <!-- Left Column: Details -->
                 <div>
-                    <!-- Shipping Address -->
-                    <div style="background: #fff; padding: 30px; border-radius: 12px; border: 1px solid #eee; margin-bottom: 30px;">
-                        <h2 style="font-size: 1.5rem; color: #1a1a2e; margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
-                            <i class="fas fa-map-marker-alt" style="color: #0d9488;"></i> Shipping Address
+                    <!-- Shipping Section -->
+                    <div style="background: #fff; border: 2px solid #eee; border-radius: 20px; padding: 40px; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
+                        <h2 style="font-size: 1.6rem; color: #111; margin-bottom: 30px; font-weight: 800; display: flex; align-items: center; gap: 15px;">
+                            <span style="width: 35px; height: 35px; background: #0d9488; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem;">1</span>
+                            Where should we send your order?
                         </h2>
                         
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                            <div class="form-group" style="margin-bottom: 20px;">
-                                <label for="full_name" style="display: block; margin-bottom: 8px; font-weight: 500; color: #4a5568;">Full Name</label>
-                                <input type="text" id="full_name" name="full_name" class="form-control" required 
-                                    value="<?= htmlspecialchars($lastAddress['full_name'] ?? '') ?>" 
-                                    style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; box-sizing: border-box;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;">
+                            <div>
+                                <label style="display: block; margin-bottom: 8px; font-weight: 700; color: #444; font-size: 0.9rem; text-transform: uppercase;">Full Name</label>
+                                <input type="text" name="full_name" required value="<?= htmlspecialchars($lastAddress['full_name'] ?? '') ?>" 
+                                    style="width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 12px; font-size: 1rem; outline: none; transition: border-color 0.2s;" 
+                                    onfocus="this.style.borderColor='#0d9488'" onblur="this.style.borderColor='#eee'">
                             </div>
-                            <div class="form-group" style="margin-bottom: 20px;">
-                                <label for="phone" style="display: block; margin-bottom: 8px; font-weight: 500; color: #4a5568;">Phone Number</label>
-                                <input type="tel" id="phone" name="phone" class="form-control" required
-                                    value="<?= htmlspecialchars($lastAddress['phone'] ?? '') ?>"
-                                    style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; box-sizing: border-box;">
+                            <div>
+                                <label style="display: block; margin-bottom: 8px; font-weight: 700; color: #444; font-size: 0.9rem; text-transform: uppercase;">Phone Number</label>
+                                <input type="tel" name="phone" required value="<?= htmlspecialchars($lastAddress['phone'] ?? '') ?>"
+                                    style="width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 12px; font-size: 1rem; outline: none;"
+                                    onfocus="this.style.borderColor='#0d9488'" onblur="this.style.borderColor='#eee'">
                             </div>
                         </div>
 
-                        <div class="form-group" style="margin-bottom: 20px;">
-                            <label for="address" style="display: block; margin-bottom: 8px; font-weight: 500; color: #4a5568;">Address (House No, Building, Street, Area)</label>
-                            <textarea id="address" name="address" class="form-control" required rows="3"
-                                style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; box-sizing: border-box; resize: vertical;"><?= htmlspecialchars($lastAddress['address'] ?? '') ?></textarea>
+                        <div style="margin-bottom: 25px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 700; color: #444; font-size: 0.9rem; text-transform: uppercase;">Full Address</label>
+                            <textarea name="address" required rows="3"
+                                style="width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 12px; font-size: 1rem; outline: none; resize: none;"
+                                onfocus="this.style.borderColor='#0d9488'" onblur="this.style.borderColor='#eee'"><?= htmlspecialchars($lastAddress['address'] ?? '') ?></textarea>
                         </div>
 
                         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
-                            <div class="form-group" style="margin-bottom: 20px;">
-                                <label for="city" style="display: block; margin-bottom: 8px; font-weight: 500; color: #4a5568;">City</label>
-                                <input type="text" id="city" name="city" class="form-control" required
-                                    value="<?= htmlspecialchars($lastAddress['city'] ?? '') ?>"
-                                    style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; box-sizing: border-box;">
+                            <div>
+                                <label style="display: block; margin-bottom: 8px; font-weight: 700; color: #444; font-size: 0.9rem; text-transform: uppercase;">City</label>
+                                <input type="text" name="city" required value="<?= htmlspecialchars($lastAddress['city'] ?? '') ?>"
+                                    style="width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 12px; font-size: 1rem; outline: none;"
+                                    onfocus="this.style.borderColor='#0d9488'" onblur="this.style.borderColor='#eee'">
                             </div>
-                            <div class="form-group" style="margin-bottom: 20px;">
-                                <label for="state" style="display: block; margin-bottom: 8px; font-weight: 500; color: #4a5568;">State</label>
-                                <input type="text" id="state" name="state" class="form-control" required
-                                    value="<?= htmlspecialchars($lastAddress['state'] ?? '') ?>"
-                                    style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; box-sizing: border-box;">
+                            <div>
+                                <label style="display: block; margin-bottom: 8px; font-weight: 700; color: #444; font-size: 0.9rem; text-transform: uppercase;">State</label>
+                                <input type="text" name="state" required value="<?= htmlspecialchars($lastAddress['state'] ?? '') ?>"
+                                    style="width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 12px; font-size: 1rem; outline: none;"
+                                    onfocus="this.style.borderColor='#0d9488'" onblur="this.style.borderColor='#eee'">
                             </div>
-                            <div class="form-group" style="margin-bottom: 20px;">
-                                <label for="pincode" style="display: block; margin-bottom: 8px; font-weight: 500; color: #4a5568;">Pincode</label>
-                                <input type="text" id="pincode" name="pincode" class="form-control" required
-                                    value="<?= htmlspecialchars($lastAddress['pincode'] ?? '') ?>"
-                                    style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; box-sizing: border-box;">
+                            <div>
+                                <label style="display: block; margin-bottom: 8px; font-weight: 700; color: #444; font-size: 0.9rem; text-transform: uppercase;">Pincode</label>
+                                <input type="text" name="pincode" required value="<?= htmlspecialchars($lastAddress['pincode'] ?? '') ?>"
+                                    style="width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 12px; font-size: 1rem; outline: none;"
+                                    onfocus="this.style.borderColor='#0d9488'" onblur="this.style.borderColor='#eee'">
                             </div>
                         </div>
                     </div>
 
-                    <!-- Payment Method -->
-                    <div style="background: #fff; padding: 30px; border-radius: 12px; border: 1px solid #eee;">
-                        <h2 style="font-size: 1.5rem; color: #1a1a2e; margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
-                            <i class="fas fa-credit-card" style="color: #0d9488;"></i> Payment Method
+                    <!-- Payment Section -->
+                    <div style="background: #fff; border: 2px solid #eee; border-radius: 20px; padding: 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
+                        <h2 style="font-size: 1.6rem; color: #111; margin-bottom: 30px; font-weight: 800; display: flex; align-items: center; gap: 15px;">
+                            <span style="width: 35px; height: 35px; background: #0d9488; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem;">2</span>
+                            How would you like to pay?
                         </h2>
                         
-                        <div style="display: flex; flex-direction: column; gap: 15px;">
-                            <label style="display: flex; align-items: center; gap: 15px; padding: 20px; border: 2px solid #0d9488; border-radius: 8px; cursor: pointer; background: #f0fdfa;" id="label_cod">
-                                <input type="radio" name="payment_method" value="cod" checked style="width: 20px; height: 20px; accent-color: #0d9488;" onchange="updatePaymentSelection()">
+                        <div style="display: flex; flex-direction: column; gap: 20px;">
+                            <label style="display: flex; align-items: center; gap: 20px; padding: 25px; border: 2px solid #0d9488; border-radius: 15px; cursor: pointer; background: #f0fdfa; transition: all 0.2s;" id="label_cod">
+                                <input type="radio" name="payment_method" value="cod" checked style="width: 25px; height: 25px; accent-color: #0d9488;" onchange="updatePaymentSelection()">
                                 <div>
-                                    <strong style="display: block; font-size: 1.1rem; color: #1a1a2e;">Cash on Delivery (COD)</strong>
-                                    <span style="color: #666; font-size: 0.9rem;">Pay with cash upon delivery.</span>
+                                    <strong style="display: block; font-size: 1.2rem; color: #111;">Cash on Delivery (COD)</strong>
+                                    <span style="color: #666; font-size: 1rem;">Pay with cash when your package arrives.</span>
                                 </div>
-                                <i class="fas fa-money-bill-wave" style="margin-left: auto; font-size: 1.5rem; color: #0d9488;"></i>
+                                <i class="fas fa-money-bill-wave" style="margin-left: auto; font-size: 2rem; color: #0d9488;"></i>
                             </label>
 
-                            <label style="display: flex; align-items: center; gap: 15px; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px; cursor: pointer; transition: all 0.2s;" id="label_razorpay">
-                                <input type="radio" name="payment_method" value="razorpay" style="width: 20px; height: 20px; accent-color: #0d9488;" onchange="updatePaymentSelection()">
+                            <label style="display: flex; align-items: center; gap: 20px; padding: 25px; border: 2px solid #eee; border-radius: 15px; cursor: pointer; transition: all 0.2s;" id="label_razorpay">
+                                <input type="radio" name="payment_method" value="razorpay" style="width: 25px; height: 25px; accent-color: #0d9488;" onchange="updatePaymentSelection()">
                                 <div>
-                                    <strong style="display: block; font-size: 1.1rem; color: #1a1a2e;">Online Payment (Razorpay Dummy)</strong>
-                                    <span style="color: #666; font-size: 0.9rem;">Pay securely using Razorpay test mode.</span>
+                                    <strong style="display: block; font-size: 1.2rem; color: #111;">Online Payment (Razorpay)</strong>
+                                    <span style="color: #666; font-size: 1rem;">Pay securely using your preferred online method.</span>
                                 </div>
-                                <i class="fas fa-credit-card" style="margin-left: auto; font-size: 1.5rem; color: #6b7280;" id="icon_razorpay"></i>
+                                <i class="fas fa-credit-card" style="margin-left: auto; font-size: 2rem; color: #aaa;" id="icon_razorpay"></i>
                             </label>
-                            
-                            <!-- Hidden input to store Razorpay Payment ID if successful -->
+
                             <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id" value="">
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Column: Order Summary (Sticky) -->
-                <div style="background: #f9fafb; padding: 30px; border-radius: 12px; border: 1px solid #e5e7eb; position: sticky; top: 100px;">
-                    <h2 style="font-size: 1.5rem; color: #1a1a2e; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #e5e7eb;">Order Summary</h2>
-                    
-                    <div style="max-height: 350px; overflow-y: auto; margin-bottom: 20px; padding-right: 10px;">
-                        <?php foreach ($cartItems as $item): ?>
-                            <div style="display: grid; grid-template-columns: 60px 1fr auto; gap: 15px; margin-bottom: 15px; align-items: center;">
-                                <div style="position: relative;">
-                                    <?php if (!empty($item['image'])): ?>
-                                        <img src="<?= BASE_URL ?>/public/images/<?= rawurlencode($item['image']) ?>" alt="" style="width: 60px; height: 60px; object-fit: cover; border-radius: 6px; border: 1px solid #ddd;">
-                                    <?php else: ?>
-                                        <div style="width: 60px; height: 60px; background: #eee; border-radius: 6px; display: flex; align-items: center; justify-content: center;"><i class="fas fa-image" style="color: #bbb;"></i></div>
-                                    <?php endif; ?>
-                                    <span style="position: absolute; top: -8px; right: -8px; background: #64748b; color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold; border: 2px solid #fff;">
-                                        <?= $item['quantity'] ?>
-                                    </span>
+                <!-- Right Column: Summary -->
+                <div style="position: sticky; top: 50px;">
+                    <div style="background: #fff; border: 2px solid #eee; border-radius: 20px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
+                        <h3 style="margin: 0 0 25px 0; font-size: 1.4rem; color: #111; font-weight: 800;">Order Summary</h3>
+                        
+                        <div style="max-height: 250px; overflow-y: auto; margin-bottom: 25px; padding-right: 5px;">
+                            <?php foreach ($cartItems as $item): ?>
+                                <div style="display: flex; gap: 15px; margin-bottom: 20px; align-items: center;">
+                                    <div style="width: 60px; height: 60px; background: #f9f9f9; border-radius: 10px; overflow: hidden; border: 1px solid #eee; flex-shrink: 0; position: relative;">
+                                        <?php if (!empty($item['image'])): ?>
+                                            <img src="<?= BASE_URL ?>/public/images/<?= rawurlencode($item['image']) ?>" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                                        <?php endif; ?>
+                                        <span style="position: absolute; top: -5px; right: -5px; background: #333; color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 800; border: 2px solid #fff;"><?= $item['quantity'] ?></span>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <div style="font-size: 0.95rem; color: #111; font-weight: 600; line-height: 1.3;"><?= htmlspecialchars($item['name']) ?></div>
+                                        <div style="font-weight: 700; color: #0d9488; margin-top: 4px;">₹<?= number_format(($item['sale_price'] ?? $item['price']) * $item['quantity'], 2) ?></div>
+                                    </div>
                                 </div>
-                                <div style="line-height: 1.4;">
-                                    <h4 style="margin: 0; font-size: 0.95rem; color: #1a1a2e;"><?= htmlspecialchars($item['name']) ?></h4>
-                                </div>
-                                <div style="font-weight: 600; color: #1a1a2e;">
-                                    ₹<?= number_format(($item['sale_price'] ?? $item['price']) * $item['quantity'], 2) ?>
-                                </div>
+                            <?php endforeach; ?>
+                        </div>
+
+                        <div style="border-top: 2px solid #f9f9f9; padding-top: 20px; margin-bottom: 30px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; color: #666; font-size: 1.1rem;">
+                                <span>Subtotal</span>
+                                <span style="color: #111; font-weight: 700;">₹<?= number_format($total, 2) ?></span>
                             </div>
-                        <?php endforeach; ?>
-                    </div>
-
-                    <div style="border-top: 1px solid #e5e7eb; padding-top: 20px;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px; color: #666;">
-                            <span>Subtotal</span>
-                            <span style="font-weight: 600; color: #1a1a2e;">₹<?= number_format($total, 2) ?></span>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px; color: #666;">
-                            <span>Shipping</span>
-                            <span style="font-weight: 600; color: #059669;">FREE</span>
-                        </div>
-                    </div>
-
-                    <div style="border-top: 2px solid #e5e7eb; margin: 20px 0; padding-top: 20px;">
-                        <div style="display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: 700; color: #1a1a2e;">
-                            <span>Total</span>
-                            <span style="color: #0d9488;">₹<span id="total_amount_display"><?= number_format($total, 2) ?></span></span>
-                            <!-- Hidden total for JS access -->
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 20px; color: #0d9488; font-size: 1.1rem; font-weight: 700;">
+                                <span>Shipping</span>
+                                <span>FREE</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-size: 1.6rem; color: #111; font-weight: 800; border-top: 2px solid #f9f9f9; padding-top: 15px;">
+                                <span>Total</span>
+                                <span style="color: #0d9488;">₹<?= number_format($total, 2) ?></span>
+                            </div>
                             <input type="hidden" id="order_total_amount" value="<?= $total ?>">
                         </div>
-                    </div>
 
-                    <button type="button" id="place_order_btn" class="btn btn-primary btn-lg" style="width: 100%; padding: 18px; font-size: 1.1rem; border-radius: 8px;" onclick="handleCheckout()">
-                        <i class="fas fa-check-circle"></i> Place Order (₹<?= number_format($total, 2) ?>)
-                    </button>
-                    
-                    <p style="text-align: center; color: #666; font-size: 0.85rem; margin-top: 15px;">
-                        <i class="fas fa-lock"></i> Secure encrypted checkout
-                    </p>
+                        <button type="button" id="place_order_btn" style="display: block; width: 100%; padding: 14px; border-radius: 50px; border: none; background: #0d9488; color: #fff; font-size: 1rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.15); transition: background 0.2s;" 
+                            onclick="handleCheckout()" onmouseover="this.style.background='#0a7a70'" onmouseout="this.style.background='#0d9488'">
+                            <i class="fas fa-check-circle" style="margin-right: 10px;"></i> Confirm Order
+                        </button>
+                        
+                        <div style="text-align: center; margin-top: 20px; color: #888; font-size: 0.9rem;">
+                            <i class="fas fa-shield-alt"></i> 256-bit Secure Encryption
+                        </div>
+                    </div>
                 </div>
 
             </div>
         </form>
     </div>
-</section>
+</div>
+
 
 <!-- Razorpay Checkout Script (Custom Dummy Modal) -->
 <style>

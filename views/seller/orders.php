@@ -1,166 +1,138 @@
-<!-- Seller Orders Management Page -->
-<div class="seller-layout">
-    <aside class="seller-sidebar">
-        <div class="seller-logo">
-            <i class="fas fa-store"></i>
-            <span>Seller Panel</span>
+<div style="display: flex; min-height: calc(100vh - 130px); background: #f8fafc;">
+    <!-- Seller Sidebar (Full Height & Sticky) -->
+    <aside
+        style="width: 260px; background: #fff; border-right: 1px solid #e5e7eb; flex-shrink: 0; position: sticky; top: 0; height: calc(100vh - 130px); overflow-y: auto;">
+        <div style="padding: 20px; border-bottom: 1px solid #e5e7eb;">
+            <h3 style="margin: 0; color: #111827; font-size: 1.1rem;"><i class="fas fa-store"
+                    style="color:#0d9488; margin-right:8px;"></i> Seller Panel</h3>
+            <p style="margin: 5px 0 0 0; font-size: 0.85rem; color: #6b7280;"><?= htmlspecialchars($_SESSION['user_name'] ?? 'Seller') ?></p>
         </div>
-        <nav class="seller-nav">
-            <a href="<?= BASE_URL ?>/seller" class="<?= ($currentPage ?? '') === 'seller/dashboard' ? 'active' : '' ?>">
-                <i class="fas fa-chart-line"></i> Dashboard
+        <div class="list-group" style="padding: 15px;">
+            <a href="<?= BASE_URL ?>/seller" class="list-group-item"
+                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none; transition: background 0.2s;">
+                <i class="fas fa-home" style="width: 20px; text-align: center;"></i> Dashboard
             </a>
-            <a href="<?= BASE_URL ?>/seller/products" class="<?= ($currentPage ?? '') === 'seller/products' ? 'active' : '' ?>">
-                <i class="fas fa-box"></i> My Products
+            <a href="<?= BASE_URL ?>/seller/products" class="list-group-item"
+                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none; transition: background 0.2s;">
+                <i class="fas fa-box" style="width: 20px; text-align: center;"></i> My Products
             </a>
-            <a href="<?= BASE_URL ?>/seller/orders" class="<?= ($currentPage ?? '') === 'seller/orders' ? 'active' : '' ?>">
-                <i class="fas fa-shopping-cart"></i> Orders Received
+            <a href="<?= BASE_URL ?>/seller/customer-history" class="list-group-item"
+                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none; transition: background 0.2s;">
+                <i class="fas fa-history" style="width: 20px; text-align: center;"></i> Customer History
             </a>
-            <a href="<?= BASE_URL ?>/seller/customer-history" class="<?= ($currentPage ?? '') === 'seller/customer-history' ? 'active' : '' ?>">
-                <i class="fas fa-history"></i> Customer History
+            <a href="<?= BASE_URL ?>/seller/orders" class="list-group-item active"
+                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; background: #0d9488; color: #fff; font-weight: 500; text-decoration: none;">
+                <i class="fas fa-shopping-cart" style="width: 20px; text-align: center;"></i> Orders
             </a>
-        </nav>
-        <div style="margin-top: auto; padding: 20px;">
-            <a href="<?= BASE_URL ?>/" class="btn btn-outline" style="width: 100%; text-align: center; border-color: rgba(255,255,255,0.2); color: #fff;">
-                <i class="fas fa-external-link-alt"></i> View Store
+            <a href="<?= BASE_URL ?>/seller/products/create" class="list-group-item"
+                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none; transition: background 0.2s;">
+                <i class="fas fa-plus" style="width: 20px; text-align: center;"></i> Add Product
             </a>
         </div>
     </aside>
 
-    <main class="seller-main">
-        <div class="seller-header">
-            <h1>Orders Received</h1>
-            <div class="seller-user">
-                <span><?= htmlspecialchars($_SESSION['user_name'] ?? 'Seller') ?></span>
-                <a href="<?= BASE_URL ?>/logout" class="btn btn-sm" style="background: transparent; border: 1px solid #dc2626; color: #dc2626;">Logout</a>
+    <!-- Seller Content Area -->
+    <main style="flex: 1; padding: 40px; overflow-y: auto;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                <h2 style="font-size: 1.5rem; color: #1a1a2e; margin: 0;">Orders Received</h2>
+                <div style="font-size: 0.9rem; color: #64748b;">Managing orders for your products</div>
             </div>
-        </div>
 
-        <div class="seller-content">
             <?php if (isset($_SESSION['success'])): ?>
-                <div class="alert alert-success">
-                    <i class="fas fa-check-circle"></i> <?= htmlspecialchars($_SESSION['success']) ?>
+                <div style="background: #ecfdf5; color: #065f46; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; border-left: 4px solid #10b981;">
+                    <i class="fas fa-check-circle"></i> <?= htmlspecialchars($_SESSION['success']); unset($_SESSION['success']); ?>
                 </div>
-                <?php unset($_SESSION['success']); ?>
             <?php endif; ?>
 
             <?php if (isset($_SESSION['error'])): ?>
-                <div class="alert alert-error">
-                    <i class="fas fa-exclamation-circle"></i> <?= htmlspecialchars($_SESSION['error']) ?>
+                <div style="background: #fef2f2; color: #b91c1c; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; border-left: 4px solid #ef4444;">
+                    <i class="fas fa-exclamation-circle"></i> <?= htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?>
                 </div>
-                <?php unset($_SESSION['error']); ?>
             <?php endif; ?>
 
-            <div class="seller-card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h2 style="margin: 0; font-size: 1.2rem;">All Order Items</h2>
-                </div>
-
+            <div style="background: #fff; padding: 25px; border-radius: 12px; border: 1px solid #eee; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
                 <?php if (empty($orders)): ?>
-                    <div style="text-align: center; padding: 40px 20px; color: #64748b;">
-                        <i class="fas fa-box-open" style="font-size: 3rem; margin-bottom: 15px; color: #cbd5e1;"></i>
-                        <h3>No orders received yet</h3>
+                    <div style="text-align: center; padding: 60px 0; color: #6b7280;">
+                        <i class="fas fa-box-open" style="font-size: 4rem; margin-bottom: 15px; color: #d1d5db;"></i>
+                        <h3 style="color: #4b5563; margin-bottom: 10px;">No Orders Yet</h3>
                         <p>When customers buy your products, they will appear here.</p>
                     </div>
                 <?php else: ?>
-                    <div class="table-responsive">
-                        <table class="table" style="min-width: 1000px;">
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; text-align: left;">
                             <thead>
-                                <tr>
-                                    <th>Order Info</th>
-                                    <th>Product</th>
-                                    <th>Customer Details</th>
-                                    <th>Price & Qty</th>
-                                    <th>Status (Update)</th>
+                                <tr style="background-color: #f9fafb; border-bottom: 2px solid #e5e7eb;">
+                                    <th style="padding: 15px; font-weight: 600; color: #4b5563;">Order Info</th>
+                                    <th style="padding: 15px; font-weight: 600; color: #4b5563;">Product</th>
+                                    <th style="padding: 15px; font-weight: 600; color: #4b5563;">Customer</th>
+                                    <th style="padding: 15px; font-weight: 600; color: #4b5563;">Amount & Qty</th>
+                                    <th style="padding: 15px; font-weight: 600; color: #4b5563; width: 220px;">Status & Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach ($orders as $order): ?>
-                                    <tr>
-                                        <!-- Order Info -->
-                                        <td>
-                                            <div style="font-weight: 600; color: #1a1a2e; margin-bottom: 4px;">#ORD-<?= str_pad($order['order_id'], 6, '0', STR_PAD_LEFT) ?></div>
-                                            <div style="font-size: 0.85rem; color: #64748b;"><i class="fas fa-calendar-alt"></i> <?= date('M j, Y h:i A', strtotime($order['order_date'])) ?></div>
-                                            <div style="font-size: 0.85rem; margin-top: 4px; font-weight: 600; text-transform: uppercase;">
+                                    <tr style="border-bottom: 1px solid #e5e7eb; transition: background 0.2s;" onmouseover="this.style.background='#f9fafb'" onmouseout="this.style.background='white'">
+                                        <td style="padding: 15px;">
+                                            <div style="font-weight: 600; color: #111827;">#ORD-<?= str_pad($order['order_id'], 6, '0', STR_PAD_LEFT) ?></div>
+                                            <div style="font-size: 0.75rem; color: #6b7280; margin-top: 4px;">
+                                                <?= date('M j, Y', strtotime($order['order_date'])) ?>
+                                            </div>
+                                            <div style="margin-top: 6px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">
                                                 <?php if ($order['payment_method'] === 'razorpay'): ?>
-                                                    <span style="color: #0d9488;"><i class="fas fa-credit-card"></i> Razorpay</span>
+                                                    <span style="color: #0d9488;"><i class="fas fa-credit-card"></i> RAZORPAY</span>
                                                 <?php else: ?>
                                                     <span style="color: #0ea5e9;"><i class="fas fa-money-bill-wave"></i> COD</span>
                                                 <?php endif; ?>
-                                                
-                                                <?php if (isset($order['payment_status'])): ?>
-                                                    <?php if ($order['payment_status'] === 'paid'): ?>
-                                                        <span style="background: #ecfdf5; color: #059669; padding: 2px 6px; border-radius: 12px; font-size: 0.75rem; margin-left: 5px;"><i class="fas fa-check-circle"></i> Paid</span>
-                                                    <?php else: ?>
-                                                        <span style="background: #fffbeb; color: #d97706; padding: 2px 6px; border-radius: 12px; font-size: 0.75rem; margin-left: 5px;">Pending</span>
-                                                    <?php endif; ?>
-                                                <?php endif; ?>
                                             </div>
                                         </td>
-                                        
-                                        <!-- Product -->
-                                        <td>
+                                        <td style="padding: 15px;">
                                             <div style="display: flex; align-items: center; gap: 10px;">
                                                 <?php if (!empty($order['image'])): ?>
-                                                    <img src="<?= BASE_URL ?>/public/images/<?= rawurlencode($order['image']) ?>" alt="" style="width: 40px; height: 40px; border-radius: 4px; object-fit: cover;">
+                                                    <img src="<?= BASE_URL ?>/public/images/<?= rawurlencode($order['image']) ?>" style="width: 40px; height: 40px; border-radius: 4px; object-fit: cover; border: 1px solid #eee;">
                                                 <?php else: ?>
-                                                    <div style="width: 40px; height: 40px; background: #eee; border-radius: 4px; display: flex; align-items: center; justify-content: center;"><i class="fas fa-image" style="color: #bbb;"></i></div>
+                                                    <div style="width: 40px; height: 40px; background: #f3f4f6; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #9ca3af;"><i class="fas fa-image"></i></div>
                                                 <?php endif; ?>
-                                                <div style="font-weight: 500; font-size: 0.95rem; line-height: 1.3;">
+                                                <div style="font-weight: 500; font-size: 0.9rem; color: #111827; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                                                     <?= htmlspecialchars($order['product_name']) ?>
                                                 </div>
                                             </div>
                                         </td>
-                                        
-                                        <!-- Customer Details -->
-                                        <td>
-                                            <div style="font-weight: 600; color: #1a1a2e; margin-bottom: 4px; display: flex; align-items: center; gap: 5px;">
-                                                <i class="fas fa-user-circle" style="color: #0d9488;"></i> <?= htmlspecialchars($order['customer_name']) ?>
-                                            </div>
-                                            <div style="font-size: 0.8rem; color: #64748b; margin-bottom: 4px;">
-                                                <i class="fas fa-envelope"></i> <?= htmlspecialchars($order['customer_email']) ?>
-                                            </div>
-                                            <div style="font-size: 0.8rem; color: #64748b; background: #f8fafc; padding: 5px; border-radius: 4px; border: 1px dashed #cbd5e1; margin-top: 5px;">
-                                                <strong style="color: #475569;">Delivery:</strong> <?= htmlspecialchars($order['shipping_name']) ?> <br>
-                                                <i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($order['city'] . ', ' . $order['state'] . ' ' . $order['pincode']) ?> <br>
-                                                <i class="fas fa-phone"></i> <?= htmlspecialchars($order['phone']) ?>
+                                        <td style="padding: 15px;">
+                                            <div style="font-weight: 500; color: #374151; font-size: 0.9rem;"><?= htmlspecialchars($order['customer_name']) ?></div>
+                                            <div style="font-size: 0.75rem; color: #6b7280; margin-top: 2px;">
+                                                <i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($order['city']) ?>
                                             </div>
                                         </td>
-                                        
-                                        <!-- Price & Qty -->
-                                        <td>
-                                            <div style="font-weight: 700; color: #1a1a2e; font-size: 1.1rem; margin-bottom: 4px;">
-                                                ₹<?= number_format($order['price'], 2) ?>
-                                            </div>
-                                            <div style="font-size: 0.9rem; color: #64748b;">
-                                                Qty: <span style="background: #e2e8f0; color: #334155; padding: 1px 6px; border-radius: 10px; font-weight: 600;"><?= $order['quantity'] ?></span>
-                                            </div>
-                                            <div style="font-size: 0.85rem; color: #0d9488; margin-top: 4px; font-weight: 600;">
-                                                Total: ₹<?= number_format($order['price'] * $order['quantity'], 2) ?>
-                                            </div>
+                                        <td style="padding: 15px;">
+                                            <div style="font-weight: 600; color: #111827;">₹<?= number_format($order['price'], 2) ?></div>
+                                            <div style="font-size: 0.75rem; color: #6b7280; margin-top: 2px;">Qty: <strong><?= $order['quantity'] ?></strong></div>
                                         </td>
-                                        
-                                        <!-- Status Update Form -->
-                                        <td>
+                                        <td style="padding: 15px;">
                                             <?php
                                                 $statusColors = [
-                                                    'pending' => 'background: #fef3c7; color: #b45309; border: 1px solid #fde68a;',
-                                                    'processing' => 'background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd;',
-                                                    'shipped' => 'background: #ede9fe; color: #5b21b6; border: 1px solid #ddd6fe;',
-                                                    'delivered' => 'background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0;',
-                                                    'cancelled' => 'background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca;'
+                                                    'pending' => 'background: #fef3c7; color: #b45309; border-color: #fde68a;',
+                                                    'processing' => 'background: #e0f2fe; color: #0369a1; border-color: #bae6fd;',
+                                                    'shipped' => 'background: #ede9fe; color: #5b21b6; border-color: #ddd6fe;',
+                                                    'delivered' => 'background: #dcfce7; color: #15803d; border-color: #bbf7d0;',
+                                                    'cancelled' => 'background: #fee2e2; color: #b91c1c; border-color: #fecaca;'
                                                 ];
-                                                $currentStyle = $statusColors[$order['item_status']] ?? $statusColors['pending'];
+                                                $style = $statusColors[$order['item_status']] ?? $statusColors['pending'];
                                             ?>
                                             <form action="<?= BASE_URL ?>/seller/orders/update" method="POST" style="display: flex; flex-direction: column; gap: 8px;">
                                                 <input type="hidden" name="item_id" value="<?= $order['id'] ?>">
-                                                
-                                                <select name="status" class="form-control" style="padding: 6px; font-size: 0.9rem; <?= $currentStyle ?>; font-weight: 600; text-transform: capitalize; border-radius: 6px; cursor: pointer; height: auto;" onchange="this.form.submit()">
-                                                    <option value="pending" <?= $order['item_status'] == 'pending' ? 'selected' : '' ?>>Pending</option>
-                                                    <option value="processing" <?= $order['item_status'] == 'processing' ? 'selected' : '' ?>>Processing</option>
-                                                    <option value="shipped" <?= $order['item_status'] == 'shipped' ? 'selected' : '' ?>>Shipped</option>
-                                                    <option value="delivered" <?= $order['item_status'] == 'delivered' ? 'selected' : '' ?>>Delivered</option>
-                                                    <option value="cancelled" <?= $order['item_status'] == 'cancelled' ? 'selected' : '' ?>>Cancelled</option>
-                                                </select>
+                                                <div style="display: flex; gap: 5px;">
+                                                    <select name="status" onchange="this.form.submit()" style="flex: 1; padding: 6px 10px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; text-transform: capitalize; cursor: pointer; border: 1px solid; <?= $style ?>">
+                                                        <option value="pending" <?= $order['item_status'] == 'pending' ? 'selected' : '' ?>>Pending</option>
+                                                        <option value="processing" <?= $order['item_status'] == 'processing' ? 'selected' : '' ?>>Processing</option>
+                                                        <option value="shipped" <?= $order['item_status'] == 'shipped' ? 'selected' : '' ?>>Shipped</option>
+                                                        <option value="delivered" <?= $order['item_status'] == 'delivered' ? 'selected' : '' ?>>Delivered</option>
+                                                        <option value="cancelled" <?= $order['item_status'] == 'cancelled' ? 'selected' : '' ?>>Cancelled</option>
+                                                    </select>
+                                                    <a href="<?= BASE_URL ?>/seller/order/<?= $order['id'] ?>" class="btn btn-outline btn-sm" style="padding: 6px 10px; font-size: 0.85rem;" title="View Details">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+                                                </div>
                                             </form>
                                         </td>
                                     </tr>

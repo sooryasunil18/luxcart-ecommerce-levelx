@@ -272,4 +272,33 @@ class SellerController
         header('Location: ' . BASE_URL . '/seller/orders');
         exit;
     }
+
+    public function orderDetail($id)
+    {
+        // Fetch specific order item details for this seller
+        $order = $this->db->fetch(
+            "SELECT oi.*, p.name as product_name, p.image, p.price as item_price, p.description as product_desc,
+                    o.id as order_id, o.total_amount, o.payment_method, o.payment_status, o.razorpay_payment_id, o.created_at as order_date,
+                    u.name as customer_name, u.email as customer_email,
+                    sa.full_name as shipping_name, sa.phone, sa.address, sa.city, sa.state, sa.pincode
+             FROM order_items oi
+             JOIN orders o ON oi.order_id = o.id
+             JOIN products p ON oi.product_id = p.id
+             JOIN users u ON o.user_id = u.id
+             JOIN shipping_addresses sa ON o.shipping_address_id = sa.id
+             WHERE oi.id = ? AND oi.seller_id = ?",
+            [$id, $this->sellerId],
+            'ii'
+        );
+
+        if (!$order) {
+            $_SESSION['error'] = "Order item not found.";
+            header('Location: ' . BASE_URL . '/seller/orders');
+            exit;
+        }
+
+        $pageTitle = 'Order Details #' . str_pad($order['order_id'], 6, '0', STR_PAD_LEFT);
+        $currentPage = 'seller/order-detail';
+        require BASE_PATH . '/views/layouts/main.php';
+    }
 }

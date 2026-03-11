@@ -25,7 +25,7 @@ class CheckoutController
              FROM cart c 
              JOIN products p ON c.product_id = p.id 
              WHERE c.user_id = ?",
-            [$this->userId]
+        [$this->userId]
         );
 
         if (empty($cartItems)) {
@@ -39,7 +39,7 @@ class CheckoutController
         foreach ($cartItems as $item) {
             $price = $item['sale_price'] ?? $item['price'];
             $total += $price * $item['quantity'];
-            
+
             // Safety check: is stock still available?
             if ($item['quantity'] > $item['stock']) {
                 $_SESSION['error'] = "Sorry, '{$item['name']}' only has {$item['stock']} left in stock. Please update your cart.";
@@ -51,7 +51,7 @@ class CheckoutController
         // 2. Fetch user's last shipping address if they have one (auto-fill)
         $lastAddress = $this->db->fetch(
             "SELECT * FROM shipping_addresses WHERE user_id = ? ORDER BY created_at DESC LIMIT 1",
-            [$this->userId]
+        [$this->userId]
         );
 
         $pageTitle = 'Secure Checkout';
@@ -68,7 +68,7 @@ class CheckoutController
         $city = trim($_POST['city'] ?? '');
         $state = trim($_POST['state'] ?? '');
         $pincode = trim($_POST['pincode'] ?? '');
-        
+
         if (empty($fullName) || empty($phone) || empty($address) || empty($city) || empty($state) || empty($pincode)) {
             $_SESSION['error'] = "Please fill in all shipping address fields.";
             header('Location: ' . BASE_URL . '/checkout');
@@ -81,7 +81,7 @@ class CheckoutController
              FROM cart c 
              JOIN products p ON c.product_id = p.id 
              WHERE c.user_id = ?",
-            [$this->userId]
+        [$this->userId]
         );
 
         if (empty($cartItems)) {
@@ -93,7 +93,7 @@ class CheckoutController
         foreach ($cartItems as $item) {
             $price = $item['sale_price'] ?? $item['price'];
             $totalAmount += $price * $item['quantity'];
-            
+
             if ($item['quantity'] > $item['stock']) {
                 $_SESSION['error'] = "Sorry, '{$item['name']}' just went out of stock! Only {$item['stock']} left.";
                 header('Location: ' . BASE_URL . '/cart');
@@ -112,48 +112,57 @@ class CheckoutController
         $paymentStatus = ($paymentMethod === 'razorpay' && !empty($razorpayPaymentId)) ? 'paid' : 'pending';
 
         // --- Begin Checkout Database Transactions ---
-        
+
         try {
             // A. Save the shipping address
             $this->db->insert(
                 "INSERT INTO shipping_addresses (user_id, full_name, phone, address, city, state, pincode) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                [$this->userId, $fullName, $phone, $address, $city, $state, $pincode]
+            [$this->userId, $fullName, $phone, $address, $city, $state, $pincode]
             );
             $addressId = $this->db->getInstance()->getConnection()->insert_id;
 
             // B. Create the massive Order wrapper
             $this->db->insert(
                 "INSERT INTO orders (user_id, shipping_address_id, total_amount, payment_method, payment_status, razorpay_payment_id) VALUES (?, ?, ?, ?, ?, ?)",
-                [$this->userId, $addressId, $totalAmount, $paymentMethod, $paymentStatus, $razorpayPaymentId]
+            [$this->userId, $addressId, $totalAmount, $paymentMethod, $paymentStatus, $razorpayPaymentId]
             );
             $orderId = $this->db->getInstance()->getConnection()->insert_id;
 
             // C. Insert each individual item & decrement stock!
             foreach ($cartItems as $item) {
                 $price = $item['sale_price'] ?? $item['price'];
-                
+
                 // Add to order_items
                 $this->db->insert(
                     "INSERT INTO order_items (order_id, product_id, seller_id, quantity, price) VALUES (?, ?, ?, ?, ?)",
-                    [$orderId, $item['product_id'], $item['seller_id'], $item['quantity'], $price]
+                [$orderId, $item['product_id'], $item['seller_id'], $item['quantity'], $price]
                 );
-                
+
                 // DECREMENT STOCK
                 $newStock = $item['stock'] - $item['quantity'];
                 $this->db->query(
                     "UPDATE products SET stock = ? WHERE id = ?",
-                    [$newStock, $item['product_id']]
+                [$newStock, $item['product_id']]
                 );
             }
 
             // D. Wipe the user's cart!
             $this->db->query("DELETE FROM cart WHERE user_id = ?", [$this->userId]);
 
+            // E. Log purchase activity
+            require_once BASE_PATH . '/models/UserActivity.php';
+            $activity = new UserActivity();
+            foreach ($cartItems as $item) {
+                $activity->log($this->userId, $item['product_id'], 'purchase');
+            }
+
             // Success! Send to confirmation page
             header('Location: ' . BASE_URL . '/order/success?id=' . $orderId);
             exit;
 
-        } catch (Exception $e) {
+
+        }
+        catch (Exception $e) {
             // If anything fails in the queries
             $_SESSION['error'] = "Something went wrong processing your order. Please try again.";
             header('Location: ' . BASE_URL . '/checkout');
@@ -165,8 +174,8 @@ class CheckoutController
     {
         // Verify this order belongs to THIS user securely
         $order = $this->db->fetch(
-            "SELECT * FROM orders WHERE id = ? AND user_id = ?", 
-            [$orderId, $this->userId]
+            "SELECT * FROM orders WHERE id = ? AND user_id = ?",
+        [$orderId, $this->userId]
         );
 
         if (!$order) {

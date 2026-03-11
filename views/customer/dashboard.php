@@ -1,28 +1,25 @@
 <!-- Customer dashboard.php (Beginner Friendly Design) -->
-<div style="display: flex; min-height: calc(100vh - 130px); background: #fdfdfd; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+<div style="display: flex; min-height: calc(100vh - 130px); background: #f8fafc; font-family: 'Inter', Arial, sans-serif; line-height: 1.6;">
     <!-- Simple Sidebar -->
-    <aside style="width: 250px; background: #fff; border-right: 2px solid #eee; flex-shrink: 0;">
-        <div style="padding: 40px 20px; text-align: center; border-bottom: 2px solid #f9f9f9;">
-            <div style="width: 60px; height: 60px; background: #0d9488; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin: 0 auto 15px;">
-                <i class="fas fa-user"></i>
-            </div>
-            <h3 style="margin: 0; font-size: 1.1rem; color: #333;">Hello, <?= htmlspecialchars(explode(' ', trim($_SESSION['user_name']))[0]) ?>!</h3>
+    <aside style="width: 250px; background: #fff; border-right: 1px solid #e5e7eb; flex-shrink: 0;">
+        <div style="padding: 30px 20px; text-align: center; border-bottom: 1px solid #e5e7eb;">
+            <h3 style="margin: 0; font-size: 1.1rem; color: #111827; font-weight: 700;">Hello, <?= htmlspecialchars(explode(' ', trim($_SESSION['user_name']))[0]) ?>!</h3>
         </div>
         <nav style="padding: 20px;">
             <ul style="list-style: none; padding: 0; margin: 0;">
                 <li style="margin-bottom: 10px;">
-                    <a href="<?= BASE_URL ?>/account" style="display: block; padding: 12px 15px; border-radius: 8px; background: #0d9488; color: #fff; text-decoration: none; font-weight: 700;">
-                        <i class="fas fa-home" style="margin-right: 10px;"></i> My Home
+                    <a href="<?= BASE_URL ?>/account" style="display: block; padding: 12px 15px; border-radius: 8px; background: #0d9488; color: #fff; text-decoration: none; font-weight: 500; font-size: 1rem;">
+                        <i class="fas fa-th-large" style="margin-right: 10px; width: 20px; text-align: center;"></i> Dashboard
                     </a>
                 </li>
                 <li style="margin-bottom: 10px;">
-                    <a href="<?= BASE_URL ?>/customer/orders" style="display: block; padding: 12px 15px; border-radius: 8px; color: #666; text-decoration: none; font-weight: 600;">
-                        <i class="fas fa-box" style="margin-right: 10px;"></i> My Orders
+                    <a href="<?= BASE_URL ?>/customer/orders" style="display: block; padding: 12px 15px; border-radius: 8px; color: #4b5563; text-decoration: none; font-weight: 500; font-size: 1rem;">
+                        <i class="fas fa-box" style="margin-right: 10px; width: 20px; text-align: center;"></i> My Orders
                     </a>
                 </li>
                 <li style="margin-bottom: 10px;">
-                    <a href="<?= BASE_URL ?>/customer/wishlist" style="display: block; padding: 12px 15px; border-radius: 8px; color: #666; text-decoration: none; font-weight: 600;">
-                        <i class="fas fa-heart" style="margin-right: 10px;"></i> My Favorites
+                    <a href="<?= BASE_URL ?>/customer/wishlist" style="display: block; padding: 12px 15px; border-radius: 8px; color: #4b5563; text-decoration: none; font-weight: 500; font-size: 1rem;">
+                        <i class="fas fa-heart" style="margin-right: 10px; width: 20px; text-align: center;"></i> Wishlist
                     </a>
                 </li>
                 <li style="margin-top: 30px;">
@@ -38,9 +35,9 @@
     <main style="flex: 1; padding: 50px; background: #fafafa;">
         <div style="max-width: 900px; margin: 0 auto;">
             <div style="margin-bottom: 40px; text-align: center;">
-                <div style="font-size: 4rem; color: #0d9488; margin-bottom: 20px;"><i class="fas fa-heart"></i></div>
-                <h1 style="font-size: 2.2rem; color: #111; margin-bottom: 10px; font-weight: 800;">Welcome to Your Home</h1>
-                <p style="color: #666; font-size: 1.1rem;">Manage your account and see your recommended products here.</p>
+                <div style="font-size: 2.5rem; color: #0d9488; margin-bottom: 20px;"><i class="fas fa-th-large"></i></div>
+                <h1 style="font-size: 1.5rem; color: #1a1a2e; margin-bottom: 10px; font-weight: 700;">Welcome to Your Dashboard</h1>
+                <p style="color: #4b5563; font-size: 1rem;">Manage your account and see your recommended products here.</p>
             </div>
 
             <div style="background: #fff; padding: 40px; border-radius: 20px; border: 2px solid #eee; margin-bottom: 50px; text-align: center;">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 10, 2026 at 09:09 AM
+-- Generation Time: Mar 11, 2026 at 05:08 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -11,6 +11,11 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `ecommerce_db`
@@ -29,6 +34,13 @@ CREATE TABLE `cart` (
   `quantity` int(11) DEFAULT 1,
   `added_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`id`, `user_id`, `product_id`, `quantity`, `added_at`) VALUES
+(23, 4, 1, 1, '2026-03-10 12:14:20');
 
 -- --------------------------------------------------------
 
@@ -88,9 +100,14 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `shipping_address_id`, `total_amount`, `payment_method`, `payment_status`, `order_status`, `created_at`) VALUES
-(1, 4, 1, 1499.99, 'cod', 'pending', 'pending', '2026-03-10 07:06:18'),
-(2, 2, 2, 299.00, 'cod', 'pending', 'pending', '2026-03-10 07:41:07');
+INSERT INTO `orders` (`id`, `user_id`, `shipping_address_id`, `total_amount`, `payment_method`, `payment_status`, `razorpay_payment_id`, `order_status`, `created_at`) VALUES
+(1, 4, 1, 1499.99, 'cod', 'pending', NULL, 'pending', '2026-03-10 07:06:18'),
+(2, 2, 2, 299.00, 'cod', 'pending', NULL, 'pending', '2026-03-10 07:41:07'),
+(3, 2, 3, 598.00, 'razorpay', 'paid', 'pay_f8291obopia', 'pending', '2026-03-10 09:14:11'),
+(4, 2, 4, 299.00, 'razorpay', 'paid', 'pay_efdn9lhxu2h', 'pending', '2026-03-10 09:16:12'),
+(5, 2, 5, 299.00, 'cod', 'pending', '', 'pending', '2026-03-10 09:20:30'),
+(6, 4, 6, 349.99, 'razorpay', 'paid', 'pay_fxj9gznz1ej', 'pending', '2026-03-10 10:21:42'),
+(7, 4, 7, 1999.00, 'razorpay', 'paid', 'pay_flxw1paq88h', 'pending', '2026-03-10 11:48:33');
 
 -- --------------------------------------------------------
 
@@ -114,8 +131,11 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `seller_id`, `quantity`, `price`, `item_status`, `created_at`) VALUES
-(1, 1, 2, 1, 1, 1499.99, 'pending', '2026-03-10 07:06:18'),
-(2, 2, 10, 3, 1, 299.00, 'pending', '2026-03-10 07:41:07');
+(4, 4, 10, 3, 1, 299.00, 'pending', '2026-03-10 09:16:12'),
+(5, 5, 10, 3, 1, 299.00, 'pending', '2026-03-10 09:20:30'),
+(6, 6, 3, 1, 1, 349.99, 'pending', '2026-03-10 10:21:42'),
+(7, 7, 9, 3, 1, 1700.00, 'delivered', '2026-03-10 11:48:33'),
+(8, 7, 10, 3, 1, 299.00, 'pending', '2026-03-10 11:48:33');
 
 -- --------------------------------------------------------
 
@@ -147,14 +167,14 @@ CREATE TABLE `products` (
 INSERT INTO `products` (`id`, `category_id`, `seller_id`, `name`, `slug`, `description`, `price`, `sale_price`, `image`, `featured`, `stock`, `rating`, `review_count`, `created_at`) VALUES
 (1, 1, 1, 'Wireless Headphones', 'wireless-headphones', 'Bluetooth over-ear headphones with noise cancellation and 30-hour battery life.', 299.99, 249.99, 'Wireless Headphones.jpg', 1, 50, 4.8, 120, '2026-03-09 07:40:27'),
 (2, 1, 1, 'Laptop Pro 15', 'laptop-pro-15', '15-inch laptop with 16GB RAM and 512GB SSD. Great for work and study.', 1499.99, NULL, 'Laptop Pro 15.jpg', 1, 24, 4.9, 85, '2026-03-09 07:40:27'),
-(3, 1, 1, 'Smart Watch', 'smart-watch', 'Fitness smartwatch with heart rate monitor, GPS, and 7-day battery.', 399.99, 349.99, 'Smart Watch.jpg', 1, 100, 4.7, 200, '2026-03-09 07:40:27'),
+(3, 1, 1, 'Smart Watch', 'smart-watch', 'Fitness smartwatch with heart rate monitor, GPS, and 7-day battery.', 399.99, 349.99, 'Smart Watch.jpg', 1, 99, 4.7, 200, '2026-03-09 07:40:27'),
 (4, 1, 1, 'Bluetooth Speaker', 'bluetooth-speaker', 'Portable waterproof speaker with deep bass and 12-hour playtime.', 79.99, NULL, NULL, 0, 60, 4.5, 150, '2026-03-09 07:40:27'),
 (5, 2, 1, 'Leather Jacket', 'leather-jacket', 'Classic genuine leather jacket with modern slim fit design.', 249.99, 199.99, 'Leather Jacket.jpg', 1, 30, 4.6, 90, '2026-03-09 07:40:27'),
 (6, 2, 1, 'Denim Jeans', 'denim-jeans', 'Premium slim fit denim jeans in dark blue wash.', 89.99, NULL, NULL, 0, 75, 4.5, 180, '2026-03-09 07:40:27'),
 (7, 2, 1, 'Cotton T-Shirt', 'cotton-tshirt', 'Soft 100% cotton t-shirt available in multiple colors.', 29.99, 24.99, NULL, 0, 200, 4.3, 300, '2026-03-09 07:40:27'),
 (8, 2, 1, 'Running Shoes', 'running-shoes', 'Lightweight running shoes with cushioned sole for daily comfort.', 129.99, 99.99, 'Running Shoes.jpg', 1, 45, 4.7, 110, '2026-03-09 07:40:27'),
-(9, 2, 3, 'jeans', 'jeans', 'These premium denim jeans are designed with a modern slim fit that offers both comfort and style. Made from high-quality durable fabric, they are perfect for everyday wear and can be paired easily with casual or semi-formal outfits.', 1800.00, 1700.00, '1773050541_jeans.jpg', 0, 4, 0.0, 0, '2026-03-09 10:02:21'),
-(10, 2, 3, 'crop top', 'crop-top', 'crop top good', 350.00, 299.00, '1773077081_croptopjpg.jpg', 0, 17, 0.0, 0, '2026-03-09 17:24:41');
+(9, 2, 3, 'jeans', 'jeans', 'These premium denim jeans are designed with a modern slim fit that offers both comfort and style. Made from high-quality durable fabric, they are perfect for everyday wear and can be paired easily with casual or semi-formal outfits.', 1800.00, 1700.00, '1773050541_jeans.jpg', 0, 3, 0.0, 0, '2026-03-09 10:02:21'),
+(10, 2, 3, 'crop top', 'crop-top', 'crop top good', 350.00, 299.00, '1773143495_Leather_Jacket.jpg', 0, 16, 0.0, 0, '2026-03-09 17:24:41');
 
 -- --------------------------------------------------------
 
@@ -180,7 +200,12 @@ CREATE TABLE `shipping_addresses` (
 
 INSERT INTO `shipping_addresses` (`id`, `user_id`, `full_name`, `phone`, `address`, `city`, `state`, `pincode`, `created_at`) VALUES
 (1, 4, 'jerin', '7689787899', 'levelx micro', 'maveilkkara', 'kerala', '686509', '2026-03-10 07:06:18'),
-(2, 2, 'jerin', '7406565808', 'sreevilasam h muttapplly po muttappaly', 'erumeli', 'kerala', '6876710', '2026-03-10 07:41:07');
+(2, 2, 'jerin', '7406565808', 'sreevilasam h muttapplly po muttappaly', 'erumeli', 'kerala', '6876710', '2026-03-10 07:41:07'),
+(3, 2, 'jerin', '7406565808', 'sreevilasam h muttapplly po muttappaly', 'erumeli', 'kerala', '6876710', '2026-03-10 09:14:11'),
+(4, 2, 'jerin', '7406565808', 'sreevilasam h muttapplly po muttappaly', 'erumeli', 'kerala', '6876710', '2026-03-10 09:16:12'),
+(5, 2, 'jerin', '7406565808', 'sreevilasam h muttapplly po muttappaly', 'erumeli', 'kerala', '6876710', '2026-03-10 09:20:30'),
+(6, 4, 'jerin', '7689787899', 'levelx micro', 'maveilkkara', 'kerala', '686509', '2026-03-10 10:21:42'),
+(7, 4, 'jerin', '7689787899', 'levelx micro', 'maveilkkara', 'kerala', '686509', '2026-03-10 11:48:33');
 
 -- --------------------------------------------------------
 
@@ -304,7 +329,7 @@ ALTER TABLE `wishlist`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -322,13 +347,13 @@ ALTER TABLE `contacts`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -340,7 +365,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `shipping_addresses`
 --
 ALTER TABLE `shipping_addresses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -352,7 +377,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `wishlist`
 --
 ALTER TABLE `wishlist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

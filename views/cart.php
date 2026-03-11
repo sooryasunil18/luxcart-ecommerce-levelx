@@ -1,186 +1,142 @@
-<!-- Cart Page -->
-<section class="page-header">
-    <div class="container">
-        <h1>Shopping Cart</h1>
-        <nav class="breadcrumb">
-            <a href="<?= BASE_URL ?>/">Home</a>
-            <i class="fas fa-chevron-right"></i>
-            <span>Cart</span>
-        </nav>
-    </div>
-</section>
+<!-- Shopping Cart Page (Beginner Friendly Design) -->
+<div style="min-height: calc(100vh - 130px); background: #f8fafc; padding: 50px 0; font-family: 'Inter', Arial, sans-serif; line-height: 1.6;">
+    <div style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+        <!-- Simple Header -->
+        <div style="margin-bottom: 40px; text-align: center;">
+            <div style="font-size: 2.5rem; color: #0d9488; margin-bottom: 15px;"><i class="fas fa-shopping-cart"></i></div>
+            <h1 style="font-size: 1.5rem; color: #1a1a2e; font-weight: 700; margin: 0 0 10px 0;">Your Shopping Bag</h1>
+            <p style="color: #4b5563; font-size: 1rem;">Review your items and proceed to checkout whenever you're ready.</p>
+        </div>
 
-<section class="section">
-    <div class="container">
         <?php if (isset($_SESSION['success'])): ?>
-            <div class="alert alert-success">
-                <i class="fas fa-check-circle"></i> <?= htmlspecialchars($_SESSION['success']) ?>
+            <div style="background: #dcfce7; color: #15803d; padding: 15px 25px; border-radius: 12px; border: 1px solid #bdf0d2; margin-bottom: 30px; font-weight: 600;">
+                <i class="fas fa-check-circle" style="margin-right: 10px;"></i> <?= htmlspecialchars($_SESSION['success']) ?>
             </div>
             <?php unset($_SESSION['success']); ?>
         <?php endif; ?>
 
         <?php if (isset($_SESSION['error'])): ?>
-            <div class="alert alert-error">
-                <i class="fas fa-exclamation-circle"></i> <?= htmlspecialchars($_SESSION['error']) ?>
+            <div style="background: #fee2e2; color: #b91c1c; padding: 15px 25px; border-radius: 12px; border: 1px solid #fecaca; margin-bottom: 30px; font-weight: 600;">
+                <i class="fas fa-exclamation-circle" style="margin-right: 10px;"></i> <?= htmlspecialchars($_SESSION['error']) ?>
             </div>
             <?php unset($_SESSION['error']); ?>
         <?php endif; ?>
 
         <?php if (empty($cartItems)): ?>
-            <div class="empty-state" style="padding: 80px 20px; text-align: center;">
-                <i class="fas fa-shopping-cart" style="font-size: 4rem; color: #ccc; margin-bottom: 20px;"></i>
-                <h3 style="color: #1a1a2e; margin-bottom: 10px; font-size: 1.5rem;">Your cart is empty</h3>
-                <p style="color: #666; margin-bottom: 20px;">Add some products to get started!</p>
-                <a href="<?= BASE_URL ?>/products" class="btn btn-primary btn-lg">
-                    <i class="fas fa-shopping-bag"></i> Browse Products
-                </a>
+            <div style="background: #fff; padding: 80px 40px; border-radius: 20px; border: 2px solid #eee; text-align: center;">
+                <div style="font-size: 4rem; color: #ddd; margin-bottom: 25px;"><i class="fas fa-shopping-bag"></i></div>
+                <h2 style="color: #333; margin-bottom: 10px; font-weight: 800;">Your bag is empty</h2>
+                <p style="color: #888; margin-bottom: 35px; font-size: 1.1rem;">Looks like you haven't added anything yet. Let's change that!</p>
+                <a href="<?= BASE_URL ?>/products" class="btn btn-primary btn-lg" style="padding: 15px 40px; border-radius: 50px; font-size: 1.1rem;">Go Shopping</a>
             </div>
         <?php else: ?>
-            <div style="display: grid; grid-template-columns: 1fr 350px; gap: 30px; align-items: start;">
-                <!-- Cart Items -->
-                <div style="background: #fff; padding: 25px; border-radius: 12px; border: 1px solid #eee;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #e5e7eb;">
-                        <h2 style="font-size: 1.3rem; color: #1a1a2e; margin: 0;">
-                            <?= count($cartItems) ?> Item<?= count($cartItems) > 1 ? 's' : '' ?> in Cart
-                        </h2>
-                        <form action="<?= BASE_URL ?>/cart/clear" method="POST" onsubmit="return confirm('Are you sure you want to clear your cart?');">
-                            <button type="submit" class="btn btn-outline btn-sm" style="color: #dc2626; border-color: #dc2626;">
-                                <i class="fas fa-trash-alt"></i> Clear All
-                            </button>
-                        </form>
-                    </div>
-
-                    <?php foreach ($cartItems as $item): ?>
-                        <div style="display: grid; grid-template-columns: 100px 1fr auto; gap: 20px; padding: 20px 0; border-bottom: 1px solid #e5e7eb; align-items: center;">
-                            <!-- Product Image -->
-                            <div style="border-radius: 8px; overflow: hidden; background: #f0f0f0;">
-                                <?php if (!empty($item['image'])): ?>
-                                    <img src="<?= BASE_URL ?>/public/images/<?= rawurlencode($item['image']) ?>" 
-                                        alt="<?= htmlspecialchars($item['name']) ?>" 
-                                        style="width: 100px; height: 100px; object-fit: cover;">
-                                <?php else: ?>
-                                    <div style="width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; color: #bbb;">
-                                        <i class="fas fa-image" style="font-size: 2rem;"></i>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-
-                            <!-- Product Details -->
-                            <div>
-                                <h3 style="font-size: 1.1rem; color: #1a1a2e; margin-bottom: 5px;">
-                                    <a href="<?= BASE_URL ?>/product/<?= $item['slug'] ?>" style="color: inherit; text-decoration: none;">
-                                        <?= htmlspecialchars($item['name']) ?>
-                                    </a>
-                                </h3>
-                                <div style="color: #666; font-size: 0.9rem; margin-bottom: 10px;">
-                                    <?php if ($item['sale_price']): ?>
-                                        <span style="color: #0d9488; font-weight: 600;">₹<?= number_format($item['sale_price'], 2) ?></span>
-                                        <span style="color: #aaa; text-decoration: line-through; margin-left: 8px;">₹<?= number_format($item['price'], 2) ?></span>
-                                    <?php else: ?>
-                                        <span style="color: #1a1a2e; font-weight: 600;">₹<?= number_format($item['price'], 2) ?></span>
-                                    <?php endif; ?>
-                                </div>
-                                
-                                <!-- Quantity Controls -->
-                                <form action="<?= BASE_URL ?>/cart/update" method="POST" style="display: flex; align-items: center; gap: 10px;">
-                                    <?php if (isset($_SESSION['user_id'])): ?>
-                                        <!-- For logged-in users, use cart ID -->
-                                        <input type="hidden" name="cart_id" value="<?= $item['id'] ?>">
-                                    <?php else: ?>
-                                        <!-- For guest users, use product ID -->
-                                        <input type="hidden" name="cart_id" value="<?= $item['product_id'] ?>">
-                                    <?php endif; ?>
-                                    <div class="quantity-selector" style="display: flex; align-items: center; border: 2px solid #ddd; border-radius: 6px; overflow: hidden;">
-                                        <button type="button" class="qty-btn" onclick="updateQty(this, -1)" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; color: #555; background: none; border: none;">
-                                            <i class="fas fa-minus" style="font-size: 0.7rem;"></i>
-                                        </button>
-                                        <input type="number" name="quantity" value="<?= $item['quantity'] ?>" min="1" max="<?= $item['stock'] ?>" 
-                                            onchange="this.form.submit()" 
-                                            style="width: 50px; text-align: center; border: none; outline: none; font-weight: 600; font-size: 0.9rem; color: #1a1a2e;">
-                                        <button type="button" class="qty-btn" onclick="updateQty(this, 1)" style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; color: #555; background: none; border: none;">
-                                            <i class="fas fa-plus" style="font-size: 0.7rem;"></i>
-                                        </button>
-                                    </div>
-                                    <span style="color: #666; font-size: 0.85rem;">In stock: <?= $item['stock'] ?></span>
-                                </form>
-                            </div>
-
-                            <!-- Price & Remove -->
-                            <div style="text-align: right;">
-                                <div style="font-size: 1.3rem; font-weight: 700; color: #1a1a2e; margin-bottom: 10px;">
-                                    ₹<?= number_format(($item['sale_price'] ?? $item['price']) * $item['quantity'], 2) ?>
-                                </div>
-                                <form action="<?= BASE_URL ?>/cart/remove" method="POST" onsubmit="return confirm('Remove this item?');" style="margin: 0;">
-                                    <?php if (isset($_SESSION['user_id'])): ?>
-                                        <!-- For logged-in users, use cart ID -->
-                                        <input type="hidden" name="cart_id" value="<?= $item['id'] ?>">
-                                    <?php else: ?>
-                                        <!-- For guest users, use product ID -->
-                                        <input type="hidden" name="cart_id" value="<?= $item['product_id'] ?>">
-                                    <?php endif; ?>
-                                    <button type="submit" class="btn btn-outline btn-sm" style="color: #dc2626; border-color: #dc2626;">
-                                        <i class="fas fa-trash"></i> Remove
-                                    </button>
-                                </form>
-                            </div>
+            <div style="display: grid; grid-template-columns: 1fr 350px; gap: 40px; align-items: start;">
+                <!-- Product List -->
+                <div>
+                    <div style="background: #fff; border: 2px solid #eee; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
+                        <div style="padding: 20px 30px; background: #fcfcfc; border-bottom: 2px solid #f9f9f9; display: flex; justify-content: space-between; align-items: center;">
+                            <h3 style="margin: 0; font-size: 1.2rem; color: #333;">Items (<?= array_sum(array_column($cartItems, 'quantity')) ?>)</h3>
+                            <form action="<?= BASE_URL ?>/cart/clear" method="POST" onsubmit="return confirm('Clear your entire bag?');">
+                                <button type="submit" style="background: none; border: none; color: #e11d48; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                                    <i class="fas fa-trash-alt"></i> Clear All
+                                </button>
+                            </form>
                         </div>
-                    <?php endforeach; ?>
+                        
+                        <div style="padding: 0 30px;">
+                            <?php foreach ($cartItems as $item): ?>
+                                <div style="display: flex; gap: 25px; padding: 30px 0; border-bottom: 1px solid #f5f5f5; align-items: center;">
+                                    <!-- Product Image -->
+                                    <div style="width: 110px; height: 110px; flex-shrink: 0; background: #f9f9f9; border-radius: 15px; overflow: hidden; border: 1px solid #eee;">
+                                        <?php if (!empty($item['image'])): ?>
+                                            <img src="<?= BASE_URL ?>/public/images/<?= rawurlencode($item['image']) ?>" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                                        <?php else: ?>
+                                            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #ccc;"><i class="fas fa-image" style="font-size: 2rem;"></i></div>
+                                        <?php endif; ?>
+                                    </div>
+
+                                    <!-- Details -->
+                                    <div style="flex: 1;">
+                                        <h4 style="margin: 0 0 5px 0; font-size: 1.2rem; color: #111;"><?= htmlspecialchars($item['name']) ?></h4>
+                                        <div style="font-size: 1.2rem; color: #333; font-weight: 800; margin-bottom: 15px;">
+                                            <?php if ($item['sale_price']): ?>
+                                                <span style="color: #0d9488;">₹<?= number_format($item['sale_price'], 2) ?></span>
+                                                <span style="color: #bbb; text-decoration: line-through; font-size: 0.9rem; margin-left: 10px;">₹<?= number_format($item['price'], 2) ?></span>
+                                            <?php else: ?>
+                                                ₹<?= number_format($item['price'], 2) ?>
+                                            <?php endif; ?>
+                                        </div>
+
+                                        <!-- Quantity Control -->
+                                        <form action="<?= BASE_URL ?>/cart/update" method="POST" style="display: flex; align-items: center; gap: 15px;">
+                                            <input type="hidden" name="cart_id" value="<?= isset($_SESSION['user_id']) ? $item['id'] : $item['product_id'] ?>">
+                                            <div style="display: flex; align-items: center; background: #fafafa; border: 2px solid #eee; border-radius: 12px; padding: 2px;">
+                                                <button type="button" onclick="updateQty(this, -1)" style="width: 35px; height: 35px; border: none; background: none; color: #666; cursor: pointer; font-size: 1rem;"><i class="fas fa-minus"></i></button>
+                                                <input type="number" name="quantity" value="<?= $item['quantity'] ?>" min="1" max="<?= $item['stock'] ?>" readonly style="width: 40px; text-align: center; border: none; background: none; font-weight: 800; color: #111; outline: none;">
+                                                <button type="button" onclick="updateQty(this, 1)" style="width: 35px; height: 35px; border: none; background: none; color: #666; cursor: pointer; font-size: 1rem;"><i class="fas fa-plus"></i></button>
+                                            </div>
+                                            <span style="font-size: 0.85rem; color: #888; font-weight: 600;">(<?= $item['stock'] ?> in stock)</span>
+                                        </form>
+                                    </div>
+
+                                    <!-- Item Total & Remove -->
+                                    <div style="text-align: right;">
+                                        <div style="font-size: 1.4rem; font-weight: 800; color: #111; margin-bottom: 10px;">₹<?= number_format(($item['sale_price'] ?? $item['price']) * $item['quantity'], 2) ?></div>
+                                        <form action="<?= BASE_URL ?>/cart/remove" method="POST" onsubmit="return confirm('Remove this item?');">
+                                            <input type="hidden" name="cart_id" value="<?= isset($_SESSION['user_id']) ? $item['id'] : $item['product_id'] ?>">
+                                            <button type="submit" style="background: none; border: none; color: #888; font-weight: 600; cursor: pointer; font-size: 0.9rem; text-decoration: underline;">Remove Item</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Cart Summary -->
-                <div style="background: #fff; padding: 25px; border-radius: 12px; border: 1px solid #eee; position: sticky; top: 100px;">
-                    <h2 style="font-size: 1.3rem; color: #1a1a2e; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #e5e7eb;">Order Summary</h2>
-                    
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 12px; color: #666;">
-                        <span>Subtotal (<?= array_sum(array_column($cartItems, 'quantity')) ?> items)</span>
-                        <span style="font-weight: 600; color: #1a1a2e;">₹<?= number_format($total, 2) ?></span>
-                    </div>
-                    
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 12px; color: #666;">
-                        <span>Shipping</span>
-                        <span style="font-weight: 600; color: #059669;">FREE</span>
-                    </div>
-                    
-                    <div style="border-top: 2px solid #e5e7eb; margin: 20px 0; padding-top: 15px;">
-                        <div style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 700; color: #1a1a2e;">
-                            <span>Total</span>
-                            <span style="color: #0d9488;">₹<?= number_format($total, 2) ?></span>
+                <!-- Summary Panel -->
+                <div style="position: sticky; top: 50px;">
+                    <div style="background: #fff; border: 2px solid #eee; border-radius: 20px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
+                        <h3 style="margin: 0 0 25px 0; font-size: 1.4rem; color: #111; font-weight: 800;">Bag Summary</h3>
+                        
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px; color: #666; font-size: 1.1rem;">
+                            <span>Subtotal</span>
+                            <span style="color: #111; font-weight: 700;">₹<?= number_format($total, 2) ?></span>
                         </div>
-                    </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 25px; color: #0d9488; font-size: 1.1rem; font-weight: 700;">
+                            <span>Shipping</span>
+                            <span>FREE</span>
+                        </div>
+                        
+                        <div style="border-top: 2px solid #f9f9f9; padding-top: 20px; margin-bottom: 30px;">
+                            <div style="display: flex; justify-content: space-between; font-size: 1.6rem; color: #111; font-weight: 800;">
+                                <span>Total</span>
+                                <span style="color: #0d9488;">₹<?= number_format($total, 2) ?></span>
+                            </div>
+                        </div>
 
-                    <?php if (isset($_SESSION['user_id'])): ?>
-                        <!-- For logged-in users -->
-                        <a href="<?= BASE_URL ?>/checkout" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 20px; padding: 16px; font-size: 1.1rem; text-align: center; display: block; box-sizing: border-box; text-decoration: none;">
-                            <i class="fas fa-lock"></i> Proceed to Checkout 
-                        </a>
-                    <?php else: ?>
-                        <!-- For guest users -->
-                        <button class="btn btn-primary btn-lg" style="width: 100%; margin-top: 20px; padding: 16px; font-size: 1.1rem;" 
-                            onclick="window.location.href='<?= BASE_URL ?>/login'">
-                            <i class="fas fa-sign-in-alt"></i> Login to Checkout
-                        </button>
-                        <div style="background: #f0fdfa; padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #0d9488;">
-                            <p style="margin: 0; color: #0f766e; font-weight: 500;">
-                                <i class="fas fa-info-circle"></i> Create an account or login to save your cart and complete checkout.
-                            </p>
-                        </div>
-                    <?php endif; ?>
+                        <?php if (isset($_SESSION['user_id'])): ?>
+                            <a href="<?= BASE_URL ?>/checkout" class="btn btn-primary" style="display: block; width: 100%; padding: 14px; border-radius: 50px; text-align: center; font-size: 1rem; font-weight: 700; text-decoration: none; background: #0d9488; box-shadow: 0 4px 12px rgba(13, 148, 136, 0.15);">Proceed to Checkout</a>
+                        <?php else: ?>
+                            <a href="<?= BASE_URL ?>/login" class="btn btn-primary" style="display: block; width: 100%; padding: 14px; border-radius: 50px; text-align: center; font-size: 1rem; font-weight: 700; text-decoration: none; background: #333;">Login to Checkout</a>
+                            <p style="text-align: center; margin-top: 15px; color: #888; font-size: 0.9rem;">Please login to complete your order.</p>
+                        <?php endif; ?>
 
-                    <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
-                        <div style="display: flex; align-items: center; gap: 10px; color: #666; font-size: 0.9rem; margin-bottom: 8px;">
-                            <i class="fas fa-truck" style="color: #0d9488;"></i>
-                            <span>Free shipping on all orders</span>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 10px; color: #666; font-size: 0.9rem;">
-                            <i class="fas fa-undo" style="color: #0d9488;"></i>
-                            <span>Easy returns within 30 days</span>
+                        <div style="margin-top: 30px; padding: 20px; background: #fcfcfc; border-radius: 15px; border: 1px solid #f1f1f1;">
+                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px; color: #444; font-weight: 600;">
+                                <i class="fas fa-truck" style="color: #0d9488;"></i>
+                                <span>Free Fast Shipping</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 12px; color: #444; font-weight: 600;">
+                                <i class="fas fa-shield-alt" style="color: #0d9488;"></i>
+                                <span>Secure Checkout</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         <?php endif; ?>
     </div>
-</section>
+</div>
 
 <script>
 function updateQty(button, change) {
@@ -195,3 +151,4 @@ function updateQty(button, change) {
     }
 }
 </script>
+

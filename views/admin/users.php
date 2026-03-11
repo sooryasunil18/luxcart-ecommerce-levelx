@@ -24,6 +24,10 @@
                 style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none; transition: background 0.2s;">
                 <i class="fas fa-list" style="width: 20px; text-align: center;"></i> Manage Categories
             </a>
+            <a href="<?= BASE_URL ?>/admin/orders" class="list-group-item"
+                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none; transition: background 0.2s;">
+                <i class="fas fa-shopping-cart" style="width: 20px; text-align: center;"></i> Manage Orders
+            </a>
             <a href="<?= BASE_URL ?>/products" class="list-group-item"
                 style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none; transition: background 0.2s;">
                 <i class="fas fa-box" style="width: 20px; text-align: center;"></i> View All Products

@@ -65,7 +65,7 @@ class ProductController
              FROM products p 
              LEFT JOIN categories c ON p.category_id = c.id 
              WHERE p.slug = ?",
-            [$slug]
+        [$slug]
         );
 
         if (!$product) {
@@ -79,8 +79,19 @@ class ProductController
              LEFT JOIN categories c ON p.category_id = c.id 
              WHERE p.category_id = ? AND p.id != ? 
              ORDER BY RAND() LIMIT 4",
-            [$product['category_id'], $product['id']]
-        );
+        [$product['category_id'], $product['id']]
+        );     
+        //user activity task1
+        if (isset($_SESSION['user_id'])) {
+            require_once BASE_PATH . '/models/UserActivity.php';
+            $activity = new UserActivity();
+            $activity->log($_SESSION['user_id'], $product['id'], 'view');
+
+
+        }
+        require_once BASE_PATH . '/models/Recommendation.php';
+        $recommendation = new Recommendation();
+        $alsoBought = $recommendation->getAlsoBought($product['id'], 4);
 
         $pageTitle = $product['name'];
         $currentPage = 'product-detail';

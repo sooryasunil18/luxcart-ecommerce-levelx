@@ -14,6 +14,9 @@
             <a href="<?= BASE_URL ?>/seller/customer-history" class="list-group-item" style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none; transition: background 0.2s;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='transparent'">
                 <i class="fas fa-history" style="width: 20px; text-align: center;"></i> Customer History
             </a>
+            <a href="<?= BASE_URL ?>/seller/orders" class="list-group-item" style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none; transition: background 0.2s;">
+                <i class="fas fa-shopping-cart" style="width: 20px; text-align: center;"></i> Orders
+            </a>
             <a href="<?= BASE_URL ?>/seller/products/create" class="list-group-item <?= !$isEdit ? 'active' : '' ?>" style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; <?= !$isEdit ? 'background: #0d9488; color: #fff; font-weight: 500;' : 'color: #4b5563;' ?> text-decoration: none;">
                 <i class="fas fa-plus" style="width: 20px; text-align: center;"></i> Add Product
             </a>

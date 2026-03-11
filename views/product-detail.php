@@ -159,5 +159,42 @@
                 </div>
             </div>
         <?php endif; ?>
+                <?php if (!empty($alsoBought)): ?>
+            <div class="related-products" style="margin-top: 50px;">
+                <h2 class="section-title">Customers Also Bought</h2>
+                <div class="products-grid">
+                    <?php foreach ($alsoBought as $ab): ?>
+                        <div class="product-card">
+                            <div class="product-image">
+                                <?php if (!empty($ab['image'])): ?>
+                                    <img src="<?= BASE_URL ?>/public/images/<?= rawurlencode($ab['image']) ?>"
+                                         alt="<?= htmlspecialchars($ab['name']) ?>"
+                                         style="width:100%;height:100%;object-fit:cover;">
+                                <?php else: ?>
+                                    <div class="product-image-placeholder">
+                                        <i class="fas fa-image"></i>
+                                        <span><?= htmlspecialchars($ab['name']) ?></span>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <div class="product-info">
+                                <h3 class="product-name">
+                                    <a href="<?= BASE_URL ?>/product/<?= $ab['slug'] ?>"><?= htmlspecialchars($ab['name']) ?></a>
+                                </h3>
+                                <div class="product-price">
+                                    <?php if ($ab['sale_price']): ?>
+                                        <span class="price-current">₹<?= number_format($ab['sale_price'], 2) ?></span>
+                                        <span class="price-original">₹<?= number_format($ab['price'], 2) ?></span>
+                                    <?php else: ?>
+                                        <span class="price-current">₹<?= number_format($ab['price'], 2) ?></span>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php endif; ?>
+
     </div>
 </section>

@@ -1,7 +1,7 @@
-<div style="display: flex; min-height: calc(100vh - 73px); background: #f8fafc;">
-    <!-- Seller Sidebar -->
+<div style="display: flex; min-height: calc(100vh - 130px); background: #f8fafc;">
+    <!-- Seller Sidebar (Full Height & Sticky) -->
     <aside
-        style="width: 260px; background: #fff; border-right: 1px solid #e5e7eb; flex-shrink: 0; position: sticky; top: 0; height: calc(100vh - 73px); overflow-y: auto;">
+        style="width: 260px; background: #fff; border-right: 1px solid #e5e7eb; flex-shrink: 0; position: sticky; top: 0; height: calc(100vh - 130px); overflow-y: auto;">
         <div style="padding: 20px; border-bottom: 1px solid #e5e7eb;">
             <h3 style="margin: 0; color: #111827; font-size: 1.1rem;"><i class="fas fa-store"
                     style="color:#0d9488; margin-right:8px;"></i> Seller Panel</h3>
@@ -11,26 +11,28 @@
         </div>
         <div class="list-group" style="padding: 15px;">
             <a href="<?= BASE_URL ?>/seller" class="list-group-item"
-                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none;">
+                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none; transition: background 0.2s;"
+                onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='transparent'">
                 <i class="fas fa-home" style="width: 20px; text-align: center;"></i> Dashboard
             </a>
             <a href="<?= BASE_URL ?>/seller/products" class="list-group-item"
-                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none;">
+                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none; transition: background 0.2s;"
+                onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='transparent'">
                 <i class="fas fa-box" style="width: 20px; text-align: center;"></i> My Products
             </a>
             <a href="<?= BASE_URL ?>/seller/customer-history" class="list-group-item active"
                 style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; background: #0d9488; color: #fff; font-weight: 500; text-decoration: none;">
                 <i class="fas fa-history" style="width: 20px; text-align: center;"></i> Customer History
             </a>
-            <a href="javascript:void(0)" class="list-group-item"
-                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #9ca3af; text-decoration: none; cursor: default;"
-                title="Coming Soon">
+            <a href="<?= BASE_URL ?>/seller/orders" class="list-group-item"
+                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none; transition: background 0.2s;"
+                onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='transparent'">
                 <i class="fas fa-shopping-cart" style="width: 20px; text-align: center;"></i> Orders
             </a>
-            <a href="javascript:void(0)" class="list-group-item"
-                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #9ca3af; text-decoration: none; cursor: default;"
-                title="Coming Soon">
-                <i class="fas fa-chart-line" style="width: 20px; text-align: center;"></i> Analytics
+            <a href="<?= BASE_URL ?>/seller/products/create" class="list-group-item"
+                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none; transition: background 0.2s;"
+                onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='transparent'">
+                <i class="fas fa-plus" style="width: 20px; text-align: center;"></i> Add Product
             </a>
         </div>
     </aside>

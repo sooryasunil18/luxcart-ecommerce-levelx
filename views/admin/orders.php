@@ -1,37 +1,44 @@
-<!-- Admin Orders Management Page -->
-<div class="admin-layout">
-    <aside class="admin-sidebar" style="background: #1a1a2e; color: #fff; min-height: calc(100vh - 70px); padding: 20px 0;">
-        <div style="padding: 0 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 20px;">
-            <h3 style="margin: 0; display: flex; align-items: center; gap: 10px; color: #fff;">
-                <i class="fas fa-hammer" style="color: #0ea5e9;"></i> Admin Panel
-            </h3>
+<div style="display: flex; min-height: calc(100vh - 73px); background: #f8fafc;">
+    <!-- Admin Sidebar (Full Height & Sticky) -->
+    <aside
+        style="width: 260px; background: #fff; border-right: 1px solid #e5e7eb; flex-shrink: 0; position: sticky; top: 0; height: calc(100vh - 73px); overflow-y: auto;">
+        <div style="padding: 20px; border-bottom: 1px solid #e5e7eb;">
+            <h3 style="margin: 0; color: #111827; font-size: 1.1rem;"><i class="fas fa-shield-alt"
+                    style="color:#0d9488; margin-right:8px;"></i> Admin Panel</h3>
+            <p style="margin: 5px 0 0 0; font-size: 0.85rem; color: #6b7280;">Administrator</p>
         </div>
-        <nav class="admin-nav" style="display: flex; flex-direction: column;">
-            <a href="<?= BASE_URL ?>/admin" style="padding: 12px 20px; color: #cbd5e1; text-decoration: none; display: flex; align-items: center; gap: 12px;">
-                <i class="fas fa-tachometer-alt" style="width: 20px;"></i> Dashboard
+        <div class="list-group" style="padding: 15px;">
+            <a href="<?= BASE_URL ?>/admin" class="list-group-item"
+                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none; transition: background 0.2s;">
+                <i class="fas fa-home" style="width: 20px; text-align: center;"></i> Dashboard
             </a>
-            <a href="<?= BASE_URL ?>/admin/users" style="padding: 12px 20px; color: #cbd5e1; text-decoration: none; display: flex; align-items: center; gap: 12px;">
-                <i class="fas fa-users" style="width: 20px;"></i> Manage Users
+            <a href="<?= BASE_URL ?>/admin/users" class="list-group-item"
+                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none; transition: background 0.2s;">
+                <i class="fas fa-users" style="width: 20px; text-align: center;"></i> Manage Users
             </a>
-            <a href="<?= BASE_URL ?>/admin/sellers" style="padding: 12px 20px; color: #cbd5e1; text-decoration: none; display: flex; align-items: center; gap: 12px;">
-                <i class="fas fa-store" style="width: 20px;"></i> Review Sellers
+            <a href="<?= BASE_URL ?>/admin/sellers" class="list-group-item"
+                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none; transition: background 0.2s;">
+                <i class="fas fa-store" style="width: 20px; text-align: center;"></i> Seller Management
             </a>
-            <a href="<?= BASE_URL ?>/admin/categories" style="padding: 12px 20px; color: #cbd5e1; text-decoration: none; display: flex; align-items: center; gap: 12px;">
-                <i class="fas fa-tags" style="width: 20px;"></i> Manage Categories
+            <a href="<?= BASE_URL ?>/admin/categories" class="list-group-item"
+                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none; transition: background 0.2s;">
+                <i class="fas fa-list" style="width: 20px; text-align: center;"></i> Manage Categories
             </a>
-            <a href="<?= BASE_URL ?>/admin/orders" class="active" style="padding: 12px 20px; color: #fff; background: rgba(14, 165, 233, 0.15); border-left: 3px solid #0ea5e9; text-decoration: none; display: flex; align-items: center; gap: 12px;">
-                <i class="fas fa-shopping-cart" style="width: 20px;"></i> All Orders
+            <a href="<?= BASE_URL ?>/admin/orders" class="list-group-item active"
+                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; background: #0d9488; color: #fff; font-weight: 500; text-decoration: none;">
+                <i class="fas fa-shopping-cart" style="width: 20px; text-align: center;"></i> Manage Orders
             </a>
-            <a href="<?= BASE_URL ?>/products" style="padding: 12px 20px; color: #cbd5e1; text-decoration: none; display: flex; align-items: center; gap: 12px;">
-                <i class="fas fa-box" style="width: 20px;"></i> Global Catalog
+            <a href="<?= BASE_URL ?>/products" class="list-group-item"
+                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none; transition: background 0.2s;">
+                <i class="fas fa-box" style="width: 20px; text-align: center;"></i> View All Products
             </a>
-        </nav>
+        </div>
     </aside>
 
-    <main class="admin-main" style="padding: 30px; background: #f8fafc; flex: 1;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-            <h1 style="margin: 0; color: #1a1a2e; font-size: 1.8rem;">Platform Orders</h1>
-        </div>
+    <!-- Admin Content Area -->
+    <main style="flex: 1; padding: 40px; overflow-y: auto;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2 style="margin-bottom: 30px; font-size: 1.5rem; color: #111827;">Platform Orders</h2>
 
         <?php if (isset($_SESSION['success'])): ?>
             <div class="alert alert-success" style="margin-bottom: 20px;">
@@ -82,7 +89,7 @@
                                 </div>
                             </div>
                             
-                            <!-- Master Admin Control -->
+                            <!-- Order Status Badge -->
                             <div>
                                 <?php
                                     $statusColors = [
@@ -94,17 +101,9 @@
                                     ];
                                     $currentStyle = $statusColors[$order['order_status']] ?? $statusColors['pending'];
                                 ?>
-                                <form action="<?= BASE_URL ?>/admin/orders/update" method="POST" style="display: flex; align-items: center; gap: 10px;">
-                                    <input type="hidden" name="order_id" value="<?= $order['id'] ?>">
-                                    <span style="font-size: 0.9rem; color: #64748b;">Global Status:</span>
-                                    <select name="status" class="form-control" style="padding: 6px 10px; font-size: 0.9rem; <?= $currentStyle ?>; font-weight: 600; text-transform: capitalize; border-radius: 6px; cursor: pointer; min-width: 140px;" onchange="this.form.submit()">
-                                        <option value="pending" <?= $order['order_status'] == 'pending' ? 'selected' : '' ?>>Pending</option>
-                                        <option value="processing" <?= $order['order_status'] == 'processing' ? 'selected' : '' ?>>Processing</option>
-                                        <option value="shipped" <?= $order['order_status'] == 'shipped' ? 'selected' : '' ?>>Shipped</option>
-                                        <option value="delivered" <?= $order['order_status'] == 'delivered' ? 'selected' : '' ?>>Delivered</option>
-                                        <option value="cancelled" <?= $order['order_status'] == 'cancelled' ? 'selected' : '' ?>>Cancelled</option>
-                                    </select>
-                                </form>
+                                <span style="display: inline-block; padding: 6px 16px; border-radius: 50px; font-size: 0.9rem; font-weight: 700; text-transform: capitalize; <?= $currentStyle ?>">
+                                    <?= htmlspecialchars($order['order_status']) ?>
+                                </span>
                             </div>
                         </div>
 
@@ -172,12 +171,6 @@
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
+        </div>
     </main>
 </div>
-
-<!-- Flex layout for admin panel if missing from global css -->
-<style>
-.admin-layout { display: flex; min-height: calc(100vh - 70px); }
-.admin-sidebar { width: 250px; flex-shrink: 0; }
-@media (max-width: 900px) { .admin-layout { flex-direction: column; } .admin-sidebar { width: 100%; min-height: auto; } }
-</style>

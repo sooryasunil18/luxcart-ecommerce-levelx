@@ -75,6 +75,10 @@ class WishlistController
                         'ii'
                     );
                     $_SESSION['success'] = 'Product added to your wishlist!';
+                                        require_once BASE_PATH . '/models/UserActivity.php';
+                    $activity = new UserActivity();
+                    $activity->log($this->userId, $productId, 'wishlist');
+
                 } else {
                     $_SESSION['error'] = 'Product is already in your wishlist.';
                 }

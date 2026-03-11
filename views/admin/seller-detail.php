@@ -24,6 +24,10 @@
                 style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none;">
                 <i class="fas fa-list" style="width: 20px; text-align: center;"></i> Manage Categories
             </a>
+            <a href="<?= BASE_URL ?>/admin/orders" class="list-group-item"
+                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none;">
+                <i class="fas fa-shopping-cart" style="width: 20px; text-align: center;"></i> Manage Orders
+            </a>
             <a href="<?= BASE_URL ?>/products" class="list-group-item"
                 style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none;">
                 <i class="fas fa-box" style="width: 20px; text-align: center;"></i> View All Products
@@ -41,7 +45,8 @@
 
         <!-- Seller Information Table -->
         <div style="background: #fff; padding: 25px; border-radius: 12px; border: 1px solid #eee; margin-bottom: 24px;">
-            <h2 style="margin-bottom: 20px; font-size: 1.3rem; color: #1a1a2e; border-bottom: 1px solid #eee; padding-bottom: 15px;">
+            <h2
+                style="margin-bottom: 20px; font-size: 1.3rem; color: #1a1a2e; border-bottom: 1px solid #eee; padding-bottom: 15px;">
                 <i class="fas fa-user-tie" style="color: #0d9488; margin-right: 8px;"></i> Seller Information
             </h2>
 
@@ -60,27 +65,32 @@
                         </tr>
                         <tr style="border-bottom: 1px solid #e5e7eb;">
                             <td style="padding: 12px 15px; color: #6b7280; font-weight: 500;">Name</td>
-                            <td style="padding: 12px 15px; font-weight: 600; color: #111827;"><?= htmlspecialchars($seller['name']) ?></td>
+                            <td style="padding: 12px 15px; font-weight: 600; color: #111827;">
+                                <?= htmlspecialchars($seller['name']) ?></td>
                         </tr>
                         <tr style="border-bottom: 1px solid #e5e7eb;">
                             <td style="padding: 12px 15px; color: #6b7280; font-weight: 500;">Email</td>
-                            <td style="padding: 12px 15px; font-weight: 600; color: #111827;"><?= htmlspecialchars($seller['email']) ?></td>
+                            <td style="padding: 12px 15px; font-weight: 600; color: #111827;">
+                                <?= htmlspecialchars($seller['email']) ?></td>
                         </tr>
                         <tr style="border-bottom: 1px solid #e5e7eb;">
                             <td style="padding: 12px 15px; color: #6b7280; font-weight: 500;">Role</td>
                             <td style="padding: 12px 15px;">
-                                <span style="display: inline-block; background: #eff6ff; color: #2563eb; padding: 4px 12px; border-radius: 999px; font-size: 0.78rem; font-weight: 600;"><?= ucfirst($seller['role']) ?></span>
+                                <span
+                                    style="display: inline-block; background: #eff6ff; color: #2563eb; padding: 4px 12px; border-radius: 999px; font-size: 0.78rem; font-weight: 600;"><?= ucfirst($seller['role']) ?></span>
                             </td>
                         </tr>
                         <tr style="border-bottom: 1px solid #e5e7eb;">
                             <td style="padding: 12px 15px; color: #6b7280; font-weight: 500;">Account Status</td>
                             <td style="padding: 12px 15px;">
                                 <?php if ($seller['is_active']): ?>
-                                    <span style="display: inline-flex; align-items: center; gap: 5px; background: #ecfdf5; color: #059669; padding: 5px 12px; border-radius: 999px; font-size: 0.78rem; font-weight: 600;">
+                                    <span
+                                        style="display: inline-flex; align-items: center; gap: 5px; background: #ecfdf5; color: #059669; padding: 5px 12px; border-radius: 999px; font-size: 0.78rem; font-weight: 600;">
                                         <i class="fas fa-circle" style="font-size: 0.45rem;"></i> Active
                                     </span>
                                 <?php else: ?>
-                                    <span style="display: inline-flex; align-items: center; gap: 5px; background: #fef2f2; color: #dc2626; padding: 5px 12px; border-radius: 999px; font-size: 0.78rem; font-weight: 600;">
+                                    <span
+                                        style="display: inline-flex; align-items: center; gap: 5px; background: #fef2f2; color: #dc2626; padding: 5px 12px; border-radius: 999px; font-size: 0.78rem; font-weight: 600;">
                                         <i class="fas fa-circle" style="font-size: 0.45rem;"></i> Inactive
                                     </span>
                                 <?php endif; ?>
@@ -90,20 +100,21 @@
                             <td style="padding: 12px 15px; color: #6b7280; font-weight: 500;">Seller Status</td>
                             <td style="padding: 12px 15px;">
                                 <?php
-                                    $sellerStatus = $seller['seller_status'] ?? 'pending';
-                                    if ($sellerStatus === 'active') {
-                                        echo '<span style="display:inline-flex;align-items:center;gap:5px;background:#ecfdf5;color:#059669;padding:5px 12px;border-radius:999px;font-size:0.78rem;font-weight:600;"><i class="fas fa-circle" style="font-size:0.45rem;"></i> Active</span>';
-                                    } elseif ($sellerStatus === 'pending') {
-                                        echo '<span style="display:inline-flex;align-items:center;gap:5px;background:#fffbeb;color:#d97706;padding:5px 12px;border-radius:999px;font-size:0.78rem;font-weight:600;"><i class="fas fa-circle" style="font-size:0.45rem;"></i> Pending</span>';
-                                    } else {
-                                        echo '<span style="display:inline-flex;align-items:center;gap:5px;background:#fef2f2;color:#dc2626;padding:5px 12px;border-radius:999px;font-size:0.78rem;font-weight:600;"><i class="fas fa-circle" style="font-size:0.45rem;"></i> Disabled</span>';
-                                    }
+                                $sellerStatus = $seller['seller_status'] ?? 'pending';
+                                if ($sellerStatus === 'active') {
+                                    echo '<span style="display:inline-flex;align-items:center;gap:5px;background:#ecfdf5;color:#059669;padding:5px 12px;border-radius:999px;font-size:0.78rem;font-weight:600;"><i class="fas fa-circle" style="font-size:0.45rem;"></i> Active</span>';
+                                } elseif ($sellerStatus === 'pending') {
+                                    echo '<span style="display:inline-flex;align-items:center;gap:5px;background:#fffbeb;color:#d97706;padding:5px 12px;border-radius:999px;font-size:0.78rem;font-weight:600;"><i class="fas fa-circle" style="font-size:0.45rem;"></i> Pending</span>';
+                                } else {
+                                    echo '<span style="display:inline-flex;align-items:center;gap:5px;background:#fef2f2;color:#dc2626;padding:5px 12px;border-radius:999px;font-size:0.78rem;font-weight:600;"><i class="fas fa-circle" style="font-size:0.45rem;"></i> Disabled</span>';
+                                }
                                 ?>
                             </td>
                         </tr>
                         <tr style="border-bottom: 1px solid #e5e7eb;">
                             <td style="padding: 12px 15px; color: #6b7280; font-weight: 500;">Registration Date</td>
-                            <td style="padding: 12px 15px; font-weight: 600; color: #111827;"><?= date('M j, Y', strtotime($seller['created_at'])) ?></td>
+                            <td style="padding: 12px 15px; font-weight: 600; color: #111827;">
+                                <?= date('M j, Y', strtotime($seller['created_at'])) ?></td>
                         </tr>
                     </tbody>
                 </table>

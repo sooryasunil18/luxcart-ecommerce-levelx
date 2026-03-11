@@ -5,6 +5,7 @@
         <div style="padding: 20px; border-bottom: 1px solid #e5e7eb;">
             <h3 style="margin: 0; color: #111827; font-size: 1.1rem;"><i class="fas fa-store"
                     style="color:#0d9488; margin-right:8px;"></i> Seller Panel</h3>
+            <p style="margin: 5px 0 0 0; font-size: 0.85rem; color: #6b7280;"><?= htmlspecialchars($_SESSION['user_name'] ?? 'Seller') ?></p>
         </div>
         <div class="list-group" style="padding: 15px;">
             <a href="<?= BASE_URL ?>/seller" class="list-group-item"
@@ -19,6 +20,10 @@
                 style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none; transition: background 0.2s;"
                 onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='transparent'">
                 <i class="fas fa-history" style="width: 20px; text-align: center;"></i> Customer History
+            </a>
+            <a href="<?= BASE_URL ?>/seller/orders" class="list-group-item"
+                style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none; transition: background 0.2s;">
+                <i class="fas fa-shopping-cart" style="width: 20px; text-align: center;"></i> Orders
             </a>
             <a href="<?= BASE_URL ?>/seller/products/create" class="list-group-item"
                 style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 8px; margin-bottom: 8px; color: #4b5563; text-decoration: none; transition: background 0.2s;">

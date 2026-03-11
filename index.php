@@ -276,6 +276,12 @@ switch ($page) {
         $controller->orders();
         break;
         
+    case (preg_match('/^seller\/order\/(\d+)$/', $page, $matches) ? true : false):
+        require_once BASE_PATH . '/controllers/SellerController.php';
+        $controller = new SellerController();
+        $controller->orderDetail($matches[1]);
+        break;
+
     case 'seller/orders/update':
          if ($_SERVER['REQUEST_METHOD'] === 'POST') {
              require_once BASE_PATH . '/controllers/SellerController.php';

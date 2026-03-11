@@ -111,6 +111,7 @@
         'checkout-success',
         'customer/orders',
         'seller/orders',
+        'seller/order-detail',
         'admin/orders'
     ];
     $current = $currentPage ?? 'home';
