@@ -37,7 +37,8 @@ switch ($page) {
         $controller = new AuthController();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $controller->loginPost();
-        } else {
+        }
+        else {
             $controller->login();
         }
         break;
@@ -46,7 +47,8 @@ switch ($page) {
         $controller = new AuthController();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $controller->registerPost();
-        } else {
+        }
+        else {
             $controller->register();
         }
         break;
@@ -91,7 +93,8 @@ switch ($page) {
         $controller = new SellerController();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $controller->saveProduct();
-        } else {
+        }
+        else {
             header('Location: ' . BASE_URL . '/seller/products');
             exit;
         }
@@ -101,7 +104,8 @@ switch ($page) {
         $controller = new SellerController();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $controller->deleteProduct();
-        } else {
+        }
+        else {
             header('Location: ' . BASE_URL . '/seller/products');
             exit;
         }
@@ -139,7 +143,8 @@ switch ($page) {
         $controller = new CartController();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $controller->add();
-        } else {
+        }
+        else {
             header('Location: ' . BASE_URL . '/products');
             exit;
         }
@@ -149,7 +154,8 @@ switch ($page) {
         $controller = new CartController();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $controller->update();
-        } else {
+        }
+        else {
             header('Location: ' . BASE_URL . '/cart');
             exit;
         }
@@ -159,7 +165,8 @@ switch ($page) {
         $controller = new CartController();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $controller->remove();
-        } else {
+        }
+        else {
             header('Location: ' . BASE_URL . '/cart');
             exit;
         }
@@ -169,7 +176,8 @@ switch ($page) {
         $controller = new CartController();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $controller->clear();
-        } else {
+        }
+        else {
             header('Location: ' . BASE_URL . '/cart');
             exit;
         }
@@ -179,7 +187,8 @@ switch ($page) {
         $controller = new ContactController();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $controller->store();
-        } else {
+        }
+        else {
             $controller->index();
         }
         break;
@@ -196,10 +205,12 @@ switch ($page) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['user_id']) && isset($_POST['is_active'])) {
                 $controller->updateUserStatus();
-            } else {
+            }
+            else {
                 $controller->updateUserRole();
             }
-        } else {
+        }
+        else {
             $controller->users();
         }
         break;
@@ -216,12 +227,15 @@ switch ($page) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['action']) && $_POST['action'] === 'add') {
                 $controller->addCategory();
-            } elseif (isset($_POST['action']) && $_POST['action'] === 'delete') {
+            }
+            elseif (isset($_POST['action']) && $_POST['action'] === 'delete') {
                 $controller->deleteCategory();
-            } else {
+            }
+            else {
                 $controller->updateCategory();
             }
-        } else {
+        }
+        else {
             $controller->categories();
         }
         break;
@@ -237,18 +251,19 @@ switch ($page) {
         $controller = new AdminController();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $controller->updateSellerStatus();
-        } else {
+        }
+        else {
             $controller->sellers();
         }
         break;
-        
+
     // Checkout & Order Management Routes
     case 'checkout':
         require_once BASE_PATH . '/controllers/CheckoutController.php';
         $controller = new CheckoutController();
         $controller->index();
         break;
-        
+
     case 'checkout/process':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require_once BASE_PATH . '/controllers/CheckoutController.php';
@@ -256,26 +271,26 @@ switch ($page) {
             $controller->process();
         }
         break;
-        
+
     case 'order/success':
         require_once BASE_PATH . '/controllers/CheckoutController.php';
         $controller = new CheckoutController();
         $orderId = isset($_GET['id']) ? intval($_GET['id']) : 0;
         $controller->success($orderId);
         break;
-        
+
     case 'customer/orders':
         require_once BASE_PATH . '/controllers/OrderController.php';
         $controller = new OrderController();
         $controller->history();
         break;
-        
+
     case 'seller/orders':
         require_once BASE_PATH . '/controllers/SellerController.php';
         $controller = new SellerController();
         $controller->orders();
         break;
-        
+
     case (preg_match('/^seller\/order\/(\d+)$/', $page, $matches) ? true : false):
         require_once BASE_PATH . '/controllers/SellerController.php';
         $controller = new SellerController();
@@ -283,19 +298,19 @@ switch ($page) {
         break;
 
     case 'seller/orders/update':
-         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-             require_once BASE_PATH . '/controllers/SellerController.php';
-             $controller = new SellerController();
-             $controller->updateOrderStatus();
-         }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            require_once BASE_PATH . '/controllers/SellerController.php';
+            $controller = new SellerController();
+            $controller->updateOrderStatus();
+        }
         break;
-        
+
     case 'admin/orders':
         require_once BASE_PATH . '/controllers/AdminController.php';
         $controller = new AdminController();
         $controller->orders();
         break;
-        
+
     case 'admin/orders/update':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require_once BASE_PATH . '/controllers/AdminController.php';
@@ -308,5 +323,6 @@ switch ($page) {
         http_response_code(404);
         echo '<h1>404 - Page Not Found</h1>';
         break;
-        
+
+
 }

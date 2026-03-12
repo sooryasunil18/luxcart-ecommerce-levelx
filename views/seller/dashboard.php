@@ -45,7 +45,7 @@
             <h2 style="margin-bottom: 20px; font-size: 1.5rem; color: #1a1a2e;">Store Overview</h2>
 
             <div class="stats-grid"
-                style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 40px;">
+                style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px;">
                 <!-- Stat Card 1 -->
                 <div class="stat-card"
                     style="background: #fff; padding: 30px 20px; border-radius: 12px; border: 1px solid #eee; text-align: center;">
@@ -66,6 +66,16 @@
                         <?= $stats['active_products'] ?>
                     </h3>
                     <p style="color: #666; font-size: 0.9rem;">Active (In Stock)</p>
+                </div>
+
+                <!-- Stat Card 3 - Total Stock -->
+                <div class="stat-card"
+                    style="background: #fff; padding: 30px 20px; border-radius: 12px; border: 1px solid #eee; text-align: center;">
+                    <div class="stat-icon" style="font-size: 2.5rem; color: #6366f1; margin-bottom: 15px;">
+                        <i class="fas fa-cubes"></i>
+                    </div>
+                    <h3 style="font-size: 2rem; margin-bottom: 5px; color: #1a1a2e;"><?= number_format($stats['total_stock']) ?></h3>
+                    <p style="color: #666; font-size: 0.9rem;">Total Stock Units</p>
                 </div>
             </div>
 

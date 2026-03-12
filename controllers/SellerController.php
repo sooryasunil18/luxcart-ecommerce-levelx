@@ -19,7 +19,8 @@ class SellerController
         // Fetch seller stats
         $stats = [
             'products' => $this->db->fetch("SELECT COUNT(*) as count FROM products WHERE seller_id = ?", [$this->sellerId])['count'],
-            'active_products' => $this->db->fetch("SELECT COUNT(*) as count FROM products WHERE seller_id = ? AND stock > 0", [$this->sellerId])['count']
+            'active_products' => $this->db->fetch("SELECT COUNT(*) as count FROM products WHERE seller_id = ? AND stock > 0", [$this->sellerId])['count'],
+            'total_stock' => $this->db->fetch("SELECT COALESCE(SUM(stock), 0) as total FROM products WHERE seller_id = ?", [$this->sellerId])['total']
         ];
 
         // Fetch recent products

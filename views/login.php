@@ -117,16 +117,43 @@ if (isset($_SESSION['register_success'])) {
 <section class="auth-section">
     <div class="auth-container">
         <div class="auth-image-panel">
+            <!-- Decorative floating shapes -->
+            <div class="auth-floating-shape shape-1"></div>
+            <div class="auth-floating-shape shape-2"></div>
+            <div class="auth-floating-shape shape-3"></div>
+
             <div class="auth-image-content">
+                <div class="auth-brand">
+                    <i class="fas fa-shopping-bag logo-icon"></i>
+                    <h2>Luxe<span>Cart</span></h2>
+                </div>
                 <h2>Welcome Back!</h2>
-                <p>Log in to access your account and continue shopping.</p>
+                <p>Log in to your account and continue exploring the best deals on Electronics and Fashion.</p>
+                <div class="auth-features">
+                    <div class="auth-feature">
+                        <div class="auth-feature-icon"><i class="fas fa-truck"></i></div>
+                        <span>Free Shipping on orders over ₹499</span>
+                    </div>
+                    <div class="auth-feature">
+                        <div class="auth-feature-icon"><i class="fas fa-shield-alt"></i></div>
+                        <span>100% Secure Payment Gateway</span>
+                    </div>
+                    <div class="auth-feature">
+                        <div class="auth-feature-icon"><i class="fas fa-headset"></i></div>
+                        <span>24/7 Dedicated Customer Support</span>
+                    </div>
+                    <div class="auth-feature">
+                        <div class="auth-feature-icon"><i class="fas fa-undo"></i></div>
+                        <span>Easy Returns & Refund Policy</span>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="auth-form-panel">
             <div class="auth-form-content">
                 <div class="auth-form-header">
                     <h1>Login</h1>
-                    <p>Enter your credentials to continue</p>
+                    <p>Enter your credentials to access your account</p>
                 </div>
 
                 <?php if (!empty($error)): ?>
@@ -136,10 +163,10 @@ if (isset($_SESSION['register_success'])) {
 
                 <form method="POST" action="<?= BASE_URL ?>/login">
                     <div class="form-group">
-                        <label>Email <span class="required">*</span></label>
+                        <label>Email Address <span class="required">*</span></label>
                         <div class="input-wrapper">
                             <i class="fas fa-envelope"></i>
-                            <input type="email" name="email" placeholder="Enter your email" required>
+                            <input type="email" name="email" placeholder="you@example.com" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -150,10 +177,10 @@ if (isset($_SESSION['register_success'])) {
                             <button type="button" class="password-toggle"><i class="fas fa-eye"></i></button>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block btn-lg">Login</button>
+                    <button type="submit" class="btn btn-primary btn-block btn-lg">Sign In</button>
                 </form>
 
-                <p class="auth-switch">Don't have an account? <a href="<?= BASE_URL ?>/register">Register</a></p>
+                <p class="auth-switch">Don't have an account? <a href="<?= BASE_URL ?>/register">Create Account</a></p>
             </div>
         </div>
     </div>
