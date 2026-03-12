@@ -77,6 +77,56 @@
     </div>
 </section>
 <?php endif; ?>
+<?php if (!empty($trendingProducts)): ?>
+<section class="section" style="background:#fff;">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title"><i class="fas fa-fire" style="color: #f43f5e;"></i> Trending Products</h2>
+            <p class="section-subtitle">Most popular products right now</p>
+        </div>
+        <div class="products-grid">
+            <?php foreach ($trendingProducts as $product): ?>
+                <div class="product-card">
+                    <div class="product-image">
+                        <?php if (!empty($product['image'])): ?>
+                            <img src="<?= BASE_URL ?>/public/images/<?= rawurlencode($product['image']) ?>"
+                                alt="<?= htmlspecialchars($product['name']) ?>" style="width:100%;height:100%;object-fit:cover">
+                        <?php else: ?>
+                            <div class="product-image-placeholder">
+                                <i class="fas fa-image"></i>
+                                <span><?= htmlspecialchars($product['name']) ?></span>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category"><?= htmlspecialchars($product['category_name']) ?></span>
+                        <h3 class="product-name">
+                            <a href="<?= BASE_URL ?>/product/<?= $product['slug'] ?>"><?= htmlspecialchars($product['name']) ?></a>
+                        </h3>
+                        <div class="product-price">
+                            <?php if ($product['sale_price']): ?>
+                                <span class="price-current">₹<?= number_format($product['sale_price'], 2) ?></span>
+                                <span class="price-original">₹<?= number_format($product['price'], 2) ?></span>
+                            <?php else: ?>
+                                <span class="price-current">₹<?= number_format($product['price'], 2) ?></span>
+                            <?php endif; ?>
+                        </div>
+                        <?php if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'seller'): ?>
+                        <form action="<?= BASE_URL ?>/cart/add" method="POST" style="margin-top: 12px;">
+                            <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit" class="btn btn-primary btn-sm add-to-cart-btn" style="width: 100%; justify-content: center; display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-shopping-bag"></i> Add to Cart
+                            </button>
+                        </form>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
 
 <!-- Featured Products -->
 <section class="section" style="background:#f0f0f5">
@@ -135,5 +185,57 @@
         <div class="section-action">
             <a href="<?= BASE_URL ?>/products" class="btn btn-outline">View All Products</a>
         </div>
+    </div>
+</section>
+
+<!-- Personalized Recommendations -->
+<?php if (!empty($personalizedProducts)): ?>
+<section class="section" style="background:#f9fafb;">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title"><i class="fas fa-magic" style="color: #8b5cf6;"></i> Recommended For You</h2>
+            <p class="section-subtitle">Based on your browsing history</p>
+        </div>
+        <div class="products-grid">
+            <?php foreach ($personalizedProducts as $product): ?>
+                <div class="product-card">
+                    <div class="product-image">
+                        <?php if (!empty($product['image'])): ?>
+                            <img src="<?= BASE_URL ?>/public/images/<?= rawurlencode($product['image']) ?>"
+                                alt="<?= htmlspecialchars($product['name']) ?>" style="width:100%;height:100%;object-fit:cover">
+                        <?php else: ?>
+                            <div class="product-image-placeholder">
+                                <i class="fas fa-image"></i>
+                                <span><?= htmlspecialchars($product['name']) ?></span>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category"><?= htmlspecialchars($product['category_name']) ?></span>
+                        <h3 class="product-name">
+                            <a href="<?= BASE_URL ?>/product/<?= $product['slug'] ?>"><?= htmlspecialchars($product['name']) ?></a>
+                        </h3>
+                        <div class="product-price">
+                            <?php if ($product['sale_price']): ?>
+                                <span class="price-current">₹<?= number_format($product['sale_price'], 2) ?></span>
+                                <span class="price-original">₹<?= number_format($product['price'], 2) ?></span>
+                            <?php else: ?>
+                                <span class="price-current">₹<?= number_format($product['price'], 2) ?></span>
+                            <?php endif; ?>
+                        </div>
+                        <form action="<?= BASE_URL ?>/cart/add" method="POST" style="margin-top: 12px;">
+                            <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit" class="btn btn-primary btn-sm add-to-cart-btn" style="width: 100%; justify-content: center; display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-shopping-bag"></i> Add to Cart
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
     </div>
 </section>

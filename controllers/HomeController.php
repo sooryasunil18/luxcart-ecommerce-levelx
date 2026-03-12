@@ -43,6 +43,19 @@ class HomeController
             );
         }
 
+        require_once BASE_PATH . '/models/Recommendation.php';
+        $recommendation = new Recommendation();
+        $trendingProducts = $recommendation->getTrending(8);
+
+        $personalizedProducts = [];
+        if (isset($_SESSION['user_id']) && $_SESSION['user_role'] === 'customer') {
+            $personalizedProducts = $recommendation->getPersonalized($_SESSION['user_id'], 4);
+        }
+
+
+
+
+
         $pageTitle = 'Home';
         $currentPage = 'home';
         require BASE_PATH . '/views/layouts/main.php';
